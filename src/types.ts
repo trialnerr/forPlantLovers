@@ -1,4 +1,4 @@
 export type FeatureProps = {
-  text: String, 
-  heading: String
-}
+  text: String;
+  heading: String;
+};
