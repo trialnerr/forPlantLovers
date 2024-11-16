@@ -1,12 +1,16 @@
-import './App.css'
+import Footer from "./components/Footer";
+import Main from "./components/Main";
+import NavBar from "./components/NavBar";
 
 function App() {
   
   return (
     <>
-     <div>Hello World</div> 
+      <NavBar />
+      <Main />
+      <Footer/>
     </>
-  )
+  );
 }
 
 export default App
