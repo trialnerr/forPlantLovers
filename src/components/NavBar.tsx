@@ -21,19 +21,19 @@ function NavBar() {
         <div className="text-gray-500 order-3 w-full md:w-auto md:order-2">
           <ul className="flex font-semibold justify-between">
             <li className="md:px-4 md:py-2 text-indigo-500">
-              <a href="#">Home</a>
+              <a href="/">Home</a>
             </li>
             <li className="md:px-4 md:py-2 hover:text-indigo-400">
-              <a href="#">Identify a Plant</a>
+              <a href="/identify">Identify a Plant</a>
             </li>
             <li className="md:px-4 md:py-2 hover:text-indigo-400">
-              <a href="#">Search Plants</a>
+              <a href="/search">Search Plants</a>
             </li>
             <li className="md:px-4 md:py-2 hover:text-indigo-400">
-              <a href="#">Plant Gallery</a>
+              <a href="/gallery">Plant Gallery</a>
             </li>
             <li className="md:px-4 md:py-2 hover:text-indigo-400">
-              <a href="#">About</a>
+              <a href="/about">About</a>
             </li>
           </ul>
         </div>
