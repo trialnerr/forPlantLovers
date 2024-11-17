@@ -1,4 +1,4 @@
-import Feature from "./Feature";
+import Feature from "../components/Feature";
 import { FeatureProps } from "../types";
 
 const Main = () => {
