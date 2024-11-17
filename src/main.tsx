@@ -5,6 +5,7 @@ import "./index.css";
 import { ErrorPage } from "./error-page.tsx";
 import RootLayout from "./layouts/RootLayout.tsx";
 import Main from "./pages/Main.tsx";
+import Identify from "./pages/Identify.tsx";
 
 const router = createBrowserRouter([
   {
@@ -15,6 +16,10 @@ const router = createBrowserRouter([
       {
         path: "/",
         element: <Main />,
+      },
+      {
+        path: "/identify",
+        element: <Identify />,
       },
     ],
   },
