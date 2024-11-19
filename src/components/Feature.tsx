@@ -1,6 +1,20 @@
+import { useEffect } from "react";
 import { FeatureProps } from "../types";
 
 const Feature = ({ heading, text }: FeatureProps) => {
+  async function fetchApi() {
+    try {
+      const response = await fetch("/api");
+      const fruits = await response.json();
+      console.log(fruits);
+    } catch (error) {
+      console.error("Error fetching stuff");
+    }
+  }
+
+  useEffect(() => {
+    fetchApi();
+  }, []);
   return (
     <div className="p-4 max-w-sm">
       <div className="flex rounded-lg h-full dark:bg-gray-800 bg-teal-400 p-8 flex-col">
