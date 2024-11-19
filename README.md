@@ -5,7 +5,7 @@ An App where you can identify plant types!
     - Upload Photos and Get An estimate of what the plant could be!
     - Add identified plants to a personal gallery 
 
-## Usage
+## 
 
 1. Start the backend server:
   ```bash
@@ -16,7 +16,7 @@ An App where you can identify plant types!
 2. Start frontend server: 
    ```bash
      npm i
-     npm run build
+     npm run dev
   ```
 3. Open your browser and go to `http://localhost:5173`
 
