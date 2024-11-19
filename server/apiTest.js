@@ -2,7 +2,6 @@ const fs = require("fs");
 const axios = require("axios");
 const FormData = require("form-data"); // Readable "multipart/form-data" streams
 require("dotenv").config();
-console.log(process.env.API_PRIVATE_KEY); 
 
 
 const PROJECT = "all"; // try 'weurope' or 'canada'
