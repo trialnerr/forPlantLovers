@@ -1,8 +1,8 @@
 import SearchInput from "../components/SearchInput"
-import { plantProps } from "../types";
+// import { plantProps } from "../types";
 
 function Search() {
-  const plants: plantProps[] = [{ common_name: 'Coconut', image_url: '' }]; 
+  // const plants: plantProps[] = [{ common_name: 'Coconut', image_url: '' }]; 
   
   return (
     <main>
