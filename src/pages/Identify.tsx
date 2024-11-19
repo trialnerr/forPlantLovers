@@ -9,11 +9,17 @@ function Identify() {
             Identify Plants Around You..
           </h1>
           <h2 className="text-balance text-xl tracking-tight text-gray-900 sm:text-2xl py-1">
-            Upload a clear and high quality picture below. 
+            Upload a clear and high quality picture below.
           </h2>
-          <div className="my-12">
-            <Upload />
-          </div>
+          <form className="my-12 flex flex-col gap-8">
+            <div className=" flex gap-8">
+              <Upload />
+              <Upload />
+              <Upload />
+              <Upload />
+            </div>
+            <button type="button" className="py-2.5 px-5 mb-2 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700 w-1/2 mx-auto">IDENTIFY</button>
+          </form>
         </div>
       </div>
     </main>
