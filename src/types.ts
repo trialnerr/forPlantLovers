@@ -3,7 +3,12 @@ export type FeatureProps = {
   heading: string;
 };
 
-export type plantProps = {
+export type PlantProps = {
   common_name: string; 
   image_url: string; 
 };
+
+export type Organ = {
+  image: string, 
+  organ: string
+}
