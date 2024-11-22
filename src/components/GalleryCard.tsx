@@ -1,6 +1,6 @@
-import { plantProps } from "../types";
+import { PlantProps } from "../types";
 
-function GalleryCard({ common_name, image_url }: plantProps) {
+function GalleryCard({ common_name, image_url }: PlantProps) {
   // const [name, setName] = useState(''); 
   
   return (
