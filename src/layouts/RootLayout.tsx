@@ -11,3 +11,7 @@ export default function RootLayout() {
     </>
   );
 }
+
+// This codebase uses components from Flowbite
+// Copyright (c) 2023 Bergside Inc.
+// Licensed under the MIT License: https://github.com/themesberg/flowbite/blob/main/LICENSE.md
