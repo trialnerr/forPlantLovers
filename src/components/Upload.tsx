@@ -1,16 +1,8 @@
-import { ChangeEvent } from "react";
+
 import { UploadProps } from "../types";
 
-function Upload({ setCurrImage, setModalOpen }: UploadProps): React.JSX.Element {
-
-  function uploadImageHandler(e: ChangeEvent<HTMLInputElement>) {
-    console.log("file added");
-    if (!e.target.files) return;
-    const file = e.target.files[0];
-    setCurrImage(URL.createObjectURL(file));
-    setModalOpen(true); 
-  }
-
+function Upload({ handleImageUpload }: UploadProps): React.JSX.Element {
+  //TO DO: check if uploaded file is a picture! jpeg, png, ....
   return (
     <div className="flex flex-col items-center justify-center w-full">
       <label
@@ -44,7 +36,12 @@ function Upload({ setCurrImage, setModalOpen }: UploadProps): React.JSX.Element 
           id="dropzone-file"
           type="file"
           className="hidden"
-          onChange={uploadImageHandler}
+          onChange={(e) => {
+            if (!e.target.files) return;
+            const file = e.target.files[0];
+            console.log(file); 
+            handleImageUpload(file); 
+          }}
         />
 
       </label>
