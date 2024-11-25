@@ -1,14 +1,14 @@
 import { useState, ChangeEvent } from "react";
-import { Organ } from "../types";
+import { OrganAndImage } from "../types";
 
 function Upload() {
   const [img, setImg] = useState("");
   const [type, setType] = useState("");
-  const [organObj, setOrganObj] = useState<Organ[]>([]); 
+  const [organObj, setOrganObj] = useState<OrganAndImage[]>([]);
 
   function handleChange(e: ChangeEvent<HTMLInputElement>) {
     if (!e.target.files) return;
-    const file = e.target.files[0]; 
+    const file = e.target.files[0];
     setImg(URL.createObjectURL(file));
   }
 
@@ -17,14 +17,13 @@ function Upload() {
   }
 
   function handleSubmit() {
-    setOrganObj([...organObj, { image: img, organ: type }]); 
+    setOrganObj([...organObj, { image: img, organ: type }]);
   }
-
   return (
     <div className="flex flex-col items-center justify-center w-full">
       <label
         htmlFor="dropzone-file"
-        className="flex flex-col items-center justify-center w-full h-64 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 hover:bg-gray-100"
+        className="flex flex-col items-center justify-center w-full h-32 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 hover:bg-gray-100"
       >
         <div className="flex flex-col items-center justify-center pt-5 pb-6">
           <svg
@@ -74,7 +73,8 @@ function Upload() {
         <option value="flower">FLOWER</option>
         <option value="fruit">FRUIT</option>
       </select>
-      <button onClick={handleSubmit}
+      <button
+        onClick={handleSubmit}
         type="button"
         className="py-2.5 px-5 mb-2 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700 w-1/2 mx-auto"
       >
@@ -86,14 +86,14 @@ function Upload() {
 
 export default Upload;
 
-
-//Form 
+//Form
 //drop zone  & select
-//add organ 
+//add organ
 //? Identify
 
 // STEPS
-// 1. Create an array of organs (data object) to be submitted during post 
-// 2. Write a post to the server using useEffect() 
+// 1. Create an array of organs (data object) to be submitted during post
+// 2. Write a post to the server using useEffect()
 // 3. Posting data to our external api properly
 // 4. Confirm that we get a response of 200 from the external API
+// 5. Disable the identify button until they have at least one picture
