@@ -28,17 +28,8 @@ const apiReq = async (organTypes, imgUrls) => {
   const apiUrl = `https://my-api.plantnet.org/v2/identify/all?${urlParams.toString()}`;
 
   try {
-    const { status, data } = await axios.get(
-      // list of probable species
-      // API_URL + API_PRIVATE_KEY,
-      // list of probable species + most similar images
-      apiUrl
-      // list of probable species + french common names
-      // API_URL + API_PRIVATE_KEY + API_LANG,
-    );
-
-    console.log("status", status); // should be: 200
-    console.log("data", require("util").inspect(data, false, null, true));
+    const result = await axios.get(apiUrl);
+    return result; 
   } catch (error) {
     console.error("error", error);
   }
