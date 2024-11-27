@@ -9,16 +9,14 @@ imageController.saveImage = async (req, res, next) => {
           cloudinary.uploader.upload(file.path, {
             folder: "plant_gallery",
           }),
-        ),
-      );
-      // Extract Cloudinary URLs
+        ));
+      // Get Cloudinary URLs
       const images = uploadedImages.map((upload) => ({
         url: upload.secure_url,
-        public_id: upload.public_id, // Optional: Use for deletion if needed
+        public_id: upload.public_id, 
       }));
 
       console.log({ images }); 
-      // Respond with uploaded image URLs
       res.locals.images = images; 
       return next();
     } catch (error) {
