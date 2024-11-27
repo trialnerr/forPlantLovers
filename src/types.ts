@@ -24,4 +24,8 @@ export type OrganListItemProps = {
   organType: OrganType
 };
 
+export type ImageDisplayProps = {
+  imgUrl: string | undefined; 
+  organType: string | undefined; 
+}
 
