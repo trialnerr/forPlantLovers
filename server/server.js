@@ -1,11 +1,9 @@
 const express = require("express");
 const path = require("path");
 const apiReq = require("./apiTest");
-// const upload = require("./middleware/multer"); 
-const multer = require("multer"); 
-const upload = multer({ dest: "uploads/" });
+const mainRouter = require("./routes/main");
 
-// apiReq();  (dont use! Limited credits)
+// apiReq();
 
 const app = express();
 const PORT = process.env.PORT || 3001;
@@ -16,22 +14,13 @@ app.use(express.urlencoded({ extended: true }));
 //serve static files from the dist folder during production
 app.use(express.static(path.join(__dirname, "../dist")));
 
-
-app.post("/api/images", upload.array("image"), (req, res) => {
-  console.log('I made it'); 
-  console.log(req.body.organTypes.split(',')); 
-  console.log(req.files);
-  res.send('Yay');
-  //send the request to the backend 
-})
-
-
-
+app.use("/api", mainRouter);
 
 //route for identification
 //BODY : [{images, organs}] up to length 4
 //RESPONSE: like sample response
 //TO DO: Figure out how to convert apiTest to this route
+//save the image to cloudinary first & then
 app.post("api/identify", (req, res) => {});
 
 //route for storing images in db?
@@ -41,6 +30,19 @@ app.post("api/store", (req, res) => {});
 app.get("*", (req, res) => {
   res.sendFile(path.join(__dirname, "../dist/index.html"));
 });
+
+//global error handler
+app.use((err, req, res, next) => {
+  const defaultErr = {
+    log: "Express error handler caught unknown middleware error",
+    status: 500,
+    message: { err: "An error occurred" },
+  };
+  const errorObj = Object.assign({}, defaultErr, err);
+  console.log(errorObj.log);
+  return res.status(errorObj.status).json(errorObj.message);
+});
+
 app.listen(PORT, () => {
   console.log(`[server]: Server is running at http://localhost:${PORT}`);
 });
