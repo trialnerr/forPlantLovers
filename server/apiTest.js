@@ -1,42 +1,40 @@
-const fs = require("fs"); 
+const fs = require("fs");
 const axios = require("axios");
 const FormData = require("form-data"); // Readable "multipart/form-data" streams
 require("dotenv").config();
 
-
 const PROJECT = "all"; // try 'weurope' or 'canada'
-const API_URL =
-  "https://my-api.plantnet.org/v2/identify/" + PROJECT + "?api-key=";
-const API_PRIVATE_KEY = process.env.API_PRIVATE_KEY; // secret
-const API_SIMSEARCH_OPTION = "&include-related-images=true"; // optional: get most similar images
-// const API_LANG = "&lang=fr"; // default: en
+const API_URL = "https://my-api.plantnet.org/v2/identify/";
+// const API_PRIVATE_KEY = process.env.API_PRIVATE_KEY; // secret
+// const API_SIMSEARCH_OPTION = "&include-related-images=true"; // optional: get most similar images
 
-const IMAGE_1 = './photos/img1.png';
-const ORGAN_1 = "flower";
-const IMAGE_2 = "./photos/img3.png";
-const ORGAN_2 = "leaf";
+const apiReq = async (organTypes, imgUrls) => {
+  const urlParams = new URLSearchParams();
 
-const apiReq = async () => {
-  let form = new FormData();
+  imgUrls.forEach((img) => {
+    urlParams.append("images", img.url);
+  });
 
-  form.append("organs", ORGAN_1);
-  form.append("images", fs.createReadStream(IMAGE_1));
+  organTypes.forEach((organ) => {
+    urlParams.append("organs", organ);
+  });
+  urlParams.append("include-related-images", true);
+  urlParams.append("no-reject", false);
+  urlParams.append("nb-results", 5);
+  urlParams.append("type", "kt");
+  urlParams.append("api-key", process.env.API_PRIVATE_KEY);
 
-  form.append("organs", ORGAN_2);
-  form.append("images", fs.createReadStream(IMAGE_2));
+  // Construct the final URL
+  const apiUrl = `https://my-api.plantnet.org/v2/identify/all?${urlParams.toString()}`;
 
   try {
-    const { status, data } = await axios.post(
+    const { status, data } = await axios.get(
       // list of probable species
       // API_URL + API_PRIVATE_KEY,
       // list of probable species + most similar images
-      API_URL + API_PRIVATE_KEY + API_SIMSEARCH_OPTION,
+      apiUrl
       // list of probable species + french common names
       // API_URL + API_PRIVATE_KEY + API_LANG,
-      form,
-      {
-        headers: form.getHeaders(),
-      },
     );
 
     console.log("status", status); // should be: 200
@@ -46,6 +44,4 @@ const apiReq = async () => {
   }
 };
 
-module.exports = apiReq; 
-
-
+module.exports = apiReq;
