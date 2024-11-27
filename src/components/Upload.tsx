@@ -33,7 +33,7 @@ function Upload({ handleImageUpload }: UploadProps): React.JSX.Element {
           </p>
         </div>
         <input
-          accept="accept=image/png, image/jpeg"
+          accept="image/png, image/jpeg"
           id="dropzone-file"
           type="file"
           className="hidden"
