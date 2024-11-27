@@ -2,12 +2,18 @@ import { useState } from "react";
 import Upload from "../components/Upload";
 import { Organ, OrganType } from "../types";
 import OrganChoiceModal from "../components/OrganChoiceModal";
+import ImageDisplay from "../components/ImageDisplay";
 
 function Identify() {
   const [organs, setOrgans] = useState<Organ[]>([]);
   const [currImage, setCurrImage] = useState<File | null>(null);
   const [openModal, setModalOpen] = useState<boolean>(false);
-  const config = { headers: { "Content-Type": "multipart/form-data" } };
+
+  const imageDisplayComponents: JSX.Element[] = []; 
+  for (let i = 0; i < 4; i++) {
+    const imgUrl: string | undefined = organs[i] ? URL.createObjectURL(organs[i].image) : undefined;
+    imageDisplayComponents.push(<ImageDisplay organType={organs[i]?.organType} imgUrl={imgUrl} />)
+  }
 
   function addOrgan(organType: OrganType) {
     if (!currImage) {
@@ -60,7 +66,7 @@ function Identify() {
 
   return (
     <main className="relative isolate px-6 pt-6 lg:px-8 min-h-[calc(100vh-2rem)] content-center">
-      <div className="mx-auto max-w-3xl">
+      <div className="mx-auto max-w-5xl">
         <div className="text-center flex flex-col h-full">
           <h1 className="text-balance text-3xl font-semibold tracking-tight text-gray-900 sm:text-4xl">
             Identify Plants Around You
@@ -76,8 +82,11 @@ function Identify() {
           ) : null}
 
           <form className="my-12 flex flex-col gap-8">
-            <div className=" flex gap-8">
+            <div className="flex justify-center">
               <Upload handleImageUpload={handleImageUpload} />
+            </div>
+            <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-4">
+              {imageDisplayComponents}
             </div>
             <button
               type="button"
