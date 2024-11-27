@@ -45,23 +45,29 @@ function Identify() {
     e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
   ) {
     e.preventDefault();
-    const formData = new FormData();
-    // formData.append("organs", organs)
-    const files = organs.map((organ) => organ.image);
-    files.forEach((file) => {
-      formData.append("image", file);
-    });
-    formData.append(
-      "organTypes",
-      organs.map((organ) => organ.organType).join(","),
-    );
-    // formData.append("image", files[0]);
-    console.log(formData);
-    // const organData = organs;
-    fetch("api/images", {
-      method: "POST",
-      body: formData,
-    });
+   try {
+     const formData = new FormData();
+     // formData.append("organs", organs)
+     const files = organs.map((organ) => organ.image);
+     files.forEach((file) => {
+       formData.append("image", file);
+     });
+     formData.append(
+       "organTypes",
+       organs.map((organ) => organ.organType).join(","),
+     );
+     // formData.append("image", files[0]);
+     console.log(formData);
+     // const organData = organs;
+     const result = await fetch("api/images", {
+       method: "POST",
+       body: formData,
+     });
+     const json = await result.json(); 
+     console.log("identification", json); 
+   } catch (error) {
+     console.error('Error identifying image'); 
+   }
   }
 
   return (
