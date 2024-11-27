@@ -33,17 +33,17 @@ function Upload({ handleImageUpload }: UploadProps): React.JSX.Element {
           </p>
         </div>
         <input
+          accept="accept=image/png, image/jpeg"
           id="dropzone-file"
           type="file"
           className="hidden"
           onChange={(e) => {
             if (!e.target.files) return;
             const file = e.target.files[0];
-            console.log(file); 
-            handleImageUpload(file); 
+            console.log(file);
+            handleImageUpload(file);
           }}
         />
-
       </label>
       <label
         htmlFor="organSelect"
