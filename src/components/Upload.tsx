@@ -4,7 +4,7 @@ import { UploadProps } from "../types";
 function Upload({ handleImageUpload }: UploadProps): React.JSX.Element {
   //TO DO: check if uploaded file is a picture! jpeg, png, ....
   return (
-    <div className="flex flex-col items-center justify-center w-full">
+    <div className="flex flex-col items-center justify-center w-2/4">
       <label
         htmlFor="dropzone-file"
         className="flex flex-col items-center justify-center w-full h-32 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 hover:bg-gray-100"
