@@ -3,11 +3,13 @@ import Upload from "../components/Upload";
 import { Organ, OrganType } from "../types";
 import OrganChoiceModal from "../components/OrganChoiceModal";
 import ImageDisplay from "../components/ImageDisplay";
+import ResultCard from "../components/ResultCard";
 
 function Identify() {
   const [organs, setOrgans] = useState<Organ[]>([]);
   const [currImage, setCurrImage] = useState<File | null>(null);
   const [openModal, setModalOpen] = useState<boolean>(false);
+  const [results, setResults] = useState<[] | undefined>(undefined); 
 
   const imageDisplayComponents: JSX.Element[] = []; 
   for (let i = 0; i < 4; i++) {
@@ -64,6 +66,7 @@ function Identify() {
        body: formData,
      });
      const json = await result.json(); 
+     setResults(json.results); 
      console.log("identification", json); 
    } catch (error) {
      console.error('Error identifying image'); 
@@ -72,7 +75,7 @@ function Identify() {
 
   return (
     <main className="relative isolate px-6 pt-6 lg:px-8 min-h-[calc(100vh-2rem)] content-center">
-      <div className="mx-auto max-w-5xl">
+      <div className="mx-auto max-w-6xl">
         <div className="text-center flex flex-col h-full">
           <h1 className="text-balance text-3xl font-semibold tracking-tight text-gray-900 sm:text-4xl">
             Identify Plants Around You
@@ -102,6 +105,14 @@ function Identify() {
               IDENTIFY
             </button>
           </form>
+          <section className="w-full">
+            {results
+              ? results.map((el) => {
+                  console.log({ el });
+                  return <ResultCard result={el} />;
+                })
+              : null}
+          </section>
         </div>
       </div>
     </main>
