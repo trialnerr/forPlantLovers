@@ -6,6 +6,8 @@ import { ErrorPage } from "./error-page.tsx";
 import RootLayout from "./layouts/RootLayout.tsx";
 import Main from "./pages/Main.tsx";
 import Identify from "./pages/Identify.tsx";
+import RegisterPage from "./pages/RegisterPage.tsx";
+import SignInPage from "./pages/SignInPage.tsx";
 
 const router = createBrowserRouter(
   [
@@ -21,6 +23,14 @@ const router = createBrowserRouter(
         {
           path: "/identify",
           element: <Identify />,
+        },
+        {
+          path: "/register",
+          element: <RegisterPage />,
+        },
+        {
+          path: "/login",
+          element: <SignInPage />,
         },
       ],
     },
