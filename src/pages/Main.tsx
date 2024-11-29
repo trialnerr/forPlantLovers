@@ -21,8 +21,8 @@ const Main = () => {
           </p>
         </div>
         <section className="flex gap-4 ">
-          {feats.map((obj) => (
-            <Feature text={obj.text} heading={obj.heading} />
+          {feats.map((obj, i) => (
+            <Feature text={obj.text} heading={obj.heading} key={`feature${i}`}/>
           ))}
         </section>
       </div>
