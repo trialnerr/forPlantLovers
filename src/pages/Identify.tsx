@@ -4,6 +4,7 @@ import { Organ, OrganType } from "../types";
 import OrganChoiceModal from "../components/OrganChoiceModal";
 import ImageDisplay from "../components/ImageDisplay";
 import ResultCard from "../components/ResultCard";
+import StorageForm from "../components/StorageForm";
 
 function Identify() {
   const [organs, setOrgans] = useState<Organ[]>([]);
@@ -14,7 +15,7 @@ function Identify() {
   const imageDisplayComponents: JSX.Element[] = []; 
   for (let i = 0; i < 4; i++) {
     const imgUrl: string | undefined = organs[i] ? URL.createObjectURL(organs[i].image) : undefined;
-    imageDisplayComponents.push(<ImageDisplay organType={organs[i]?.organType} imgUrl={imgUrl} />)
+    imageDisplayComponents.push(<ImageDisplay organType={organs[i]?.organType} imgUrl={imgUrl} key={`imageDisplay${i}`}/>)
   }
 
   function addOrgan(organType: OrganType) {
@@ -107,12 +108,14 @@ function Identify() {
           </form>
           <section className="w-full">
             {results
-              ? results.map((el) => {
+              ? results.map((el, i) => {
                   console.log({ el });
-                  return <ResultCard result={el} />;
+                return <ResultCard result={el} key={`resultCard${i}`
+} />;
                 })
               : null}
           </section>
+          <StorageForm />
         </div>
       </div>
     </main>
