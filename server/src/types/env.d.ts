@@ -14,3 +14,5 @@ declare global {
     }
   }
 }
+
+// https://dev.to/deepak22448/typescript-and-processenv-a-match-made-in-nodejs-heaven-1h7h
