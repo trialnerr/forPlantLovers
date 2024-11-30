@@ -1,39 +1,72 @@
-// import { Schema, model } from 'mongoose';
-// import bcrypt from 'bcrypt'
+import { Types, Schema, model , Document} from "mongoose";
+import bcrypt from "bcrypt";
 
+export interface IUser extends Document {
+  name: string;
+  email: string;
+  password: string;
+  gallery?: [
+    {
+      plantID: Types.ObjectId;
+      idDate: Date;
+      idPlace: string;
+      uploadedImages: string[];
+      notes: string;
+    },
+  ];
+  avatar?: string;
+  createdAt: Date;
+}
 
-// // 1. Create an interface representing a document in MongoDB.
-// interface IUser {
-//   name: string;
-//   email: string;
-//   password: string; 
-//   avatar?: string; 
-// }
+const UserSchema = new Schema<IUser>({
+  name: { type: String, required: true, unique: true },
+  email: { type: String, required: true, unique: true },
+  password: { type: String, required: true },
+  avatar: String,
+  gallery: [
+    {
+      plantID: {
+        type: Schema.Types.ObjectId,
+        ref: "Plant",
+      },
+      idDate: Date,
+      idPlace: String,
+      uploadedImages: [String],
+      notes: String,
+    },
+  ],
+  createdAt: { type: Date, default: Date.now },
+});
 
-// const userSchema = new Schema<IUser>({
-//   name: { type: String, required: true, unique: true},
-//   email: { type: String, required: true, unique: true },
-//   password: { type: String, required: true },
-//   avatar: String,
-// });
+//encrypt the password before saving
+UserSchema.pre<IUser>("save", async function (next) {
+  try {
+    //if the password is not modified, then we don't need to encrypt it again
+    if (!this.isModified("password")) return next();
+    const hashedPassword = await bcrypt.hash(this.password, 10);
+    this.password = hashedPassword;
+    next();
+  } catch (error: unknown) {
+    if (error instanceof Error) {
+      next(error);
+    } else {
+      next(new Error("Error occured hashing password."));
+    }
+  }
+});
 
-// userSchema.pre("save", function save(next) {
-//   const user = this;
-//   if (!user.isModified("password")) {
-//     return next();
-//   }
-//   bcrypt.genSalt(10, (err, salt) => {
-//     if (err) {
-//       return next(err);
-//     }
-//     bcrypt.hash(user.password, salt, (err, hash) => {
-//       if (err) {
-//         return next(err);
-//       }
-//       user.password = hash;
-//       next();
-//     });
-//   });
-// });
-// export const User = model<IUser>("User", userSchema);
+//validate password (this refers to the model)
+UserSchema.methods.comparePassword = async function (password: string): Promise<boolean> {
+  const user = this as IUser;
+  try {
+    const isMatch = await bcrypt.compare(password, user.password);
+    return isMatch; 
+  } catch (error) {
+    console.log('Wrong password', error); 
+    throw new Error("Error comparing passwords.");
+  }
+};
 
+export const User = model<IUser>("User", UserSchema);
+
+//https://www.slingacademy.com/article/mongoose-define-schema-typescript/
