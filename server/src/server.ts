@@ -1,9 +1,6 @@
-const express = require("express");
-const path = require("path");
-const apiReq = require("./apiTest");
-const mainRouter = require("./routes/main");
-
-// apiReq();
+import express, { Request, Response } from "express";
+import path from "path";
+import mainRouter from "./routes/main";
 
 const app = express();
 const PORT = process.env.PORT || 3001;

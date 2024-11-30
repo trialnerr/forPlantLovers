@@ -15,7 +15,7 @@ router.post(
       const organTypes = req.body.organTypes.split(",");
       const { status, data } = await apiReq(organTypes, images);
       console.log("data", require("util").inspect(data, false, null, true));
-      res.status(status).json({data, images});
+      res.status(status).json({ data, images });
     } catch (error) {
       next({
         log: `error in api call, ${error}`,
