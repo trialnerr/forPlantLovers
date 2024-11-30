@@ -11,8 +11,8 @@ function ResultCard({ result }) {
       </div>
       <div className="w-full p-4 border flex justify-center">
         <div className="flex gap-3 flex-wrap">
-          {images.map((imgObj) => {
-            return <img src={imgObj.url.s} alt="" />;
+          {images.map((imgObj, i) => {
+            return <img src={imgObj.url.s} alt="" key={`resultCardImg${i}`}/>;
           })}
         </div>
       </div>
