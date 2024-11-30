@@ -10,7 +10,7 @@ export interface IUser extends Document {
       plantID: Types.ObjectId;
       idDate: Date;
       idPlace: string;
-      uploadedImages: string[];
+      uploadedImages: string[];  //array of cloudinary ids
       notes: string;
     },
   ];
