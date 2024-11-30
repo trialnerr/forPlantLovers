@@ -15,7 +15,8 @@ imageController.saveImage = async (req, res, next) => {
         url: upload.secure_url,
         public_id: upload.public_id, 
       }));
-
+ 
+      //save images to mongoDB(passing in USER_ID & cloudinaryID)
       console.log({ images }); 
       res.locals.images = images; 
       return next();
