@@ -1,6 +1,6 @@
 import { useState } from "react";
 import Upload from "../components/Upload";
-import { Organ, OrganType } from "../types";
+import { Organ, OrganType, PlantIdResults, PlantIdAPIResults, ApiImagesAndResultsResponse } from "../types";
 import OrganChoiceModal from "../components/OrganChoiceModal";
 import ImageDisplay from "../components/ImageDisplay";
 import ResultCard from "../components/ResultCard";
@@ -10,12 +10,20 @@ function Identify() {
   const [organs, setOrgans] = useState<Organ[]>([]);
   const [currImage, setCurrImage] = useState<File | null>(null);
   const [openModal, setModalOpen] = useState<boolean>(false);
-  const [results, setResults] = useState<[] | undefined>(undefined); 
+  const [identification, setIdentification] = useState<PlantIdResults | null>(null);
 
-  const imageDisplayComponents: JSX.Element[] = []; 
+  const imageDisplayComponents: JSX.Element[] = [];
   for (let i = 0; i < 4; i++) {
-    const imgUrl: string | undefined = organs[i] ? URL.createObjectURL(organs[i].image) : undefined;
-    imageDisplayComponents.push(<ImageDisplay organType={organs[i]?.organType} imgUrl={imgUrl} key={`imageDisplay${i}`}/>)
+    const imgUrl: string | undefined = organs[i]
+      ? URL.createObjectURL(organs[i].image)
+      : undefined;
+    imageDisplayComponents.push(
+      <ImageDisplay
+        organType={organs[i]?.organType}
+        imgUrl={imgUrl}
+        key={`imageDisplay${i}`}
+      />,
+    );
   }
 
   function addOrgan(organType: OrganType) {
@@ -48,30 +56,26 @@ function Identify() {
     e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
   ) {
     e.preventDefault();
-   try {
-     const formData = new FormData();
-     // formData.append("organs", organs)
-     const files = organs.map((organ) => organ.image);
-     files.forEach((file) => {
-       formData.append("image", file);
-     });
-     formData.append(
-       "organTypes",
-       organs.map((organ) => organ.organType).join(","),
-     );
-     // formData.append("image", files[0]);
-     console.log(formData);
-     // const organData = organs;
-     const result = await fetch("api/images", {
-       method: "POST",
-       body: formData,
-     });
-     const json = await result.json(); 
-     setResults(json.results); 
-     console.log("identification", json); 
-   } catch (error) {
-     console.error('Error identifying image'); 
-   }
+    try {
+      const formData: FormData = new FormData();
+      // formData.append("organs", organs)
+      const files: File[] = organs.map((organ) => organ.image);
+      files.forEach((file) => {
+        formData.append("image", file);
+      });
+      formData.append(
+        "organTypes",
+        organs.map((organ) => organ.organType).join(","),
+      );
+      const response: Response = await fetch("api/images", {
+        method: "POST",
+        body: formData,
+      });
+      const result: ApiImagesAndResultsResponse = await response.json();
+      setIdentification(result.data.results); 
+    } catch (error) {
+      console.error("Error identifying image");
+    }
   }
 
   return (
@@ -107,11 +111,10 @@ function Identify() {
             </button>
           </form>
           <section className="w-full">
-            {results
-              ? results.map((el, i) => {
+            {identification
+              ? identification.map((el, i) => {
                   console.log({ el });
-                return <ResultCard result={el} key={`resultCard${i}`
-} />;
+                  return <ResultCard result={el} key={`resultCard${i}`} />;
                 })
               : null}
           </section>
