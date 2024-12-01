@@ -12,6 +12,12 @@ export interface ServerError extends Error {
   log?: string; 
 };
 
+export interface UserRegistrationRequestBody {
+  userName: string; 
+  email: string; 
+  password: string; 
+}
+
 
 
 
