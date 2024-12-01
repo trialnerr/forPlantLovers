@@ -18,6 +18,9 @@ export interface UserRegistrationRequestBody {
   password: string; 
 }
 
-
+export interface UserLoginRequestBody {
+  email: string;
+  password: string;
+}
 
 
