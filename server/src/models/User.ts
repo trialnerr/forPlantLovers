@@ -10,12 +10,13 @@ export interface IUser extends Document {
       plantID: Types.ObjectId;
       idDate: Date;
       idPlace: string;
-      uploadedImages: string[];  //array of cloudinary ids
+      uploadedImages: string[]; //array of cloudinary ids
       notes: string;
     },
   ];
   avatar?: string;
   createdAt: Date;
+  comparePassword(password: string): Promise<boolean>;
 }
 
 const UserSchema = new Schema<IUser>({
@@ -62,7 +63,7 @@ UserSchema.methods.comparePassword = async function (password: string): Promise<
     const isMatch = await bcrypt.compare(password, user.password);
     return isMatch; 
   } catch (error) {
-    console.log('Wrong password', error); 
+    console.error('Error comparing passwords', error); 
     throw new Error("Error comparing passwords.");
   }
 };
