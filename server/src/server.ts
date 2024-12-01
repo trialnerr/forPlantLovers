@@ -1,4 +1,10 @@
-import express, {  } from "express";
+import express from "express";
+
+//error handler middleware
+import globalErrorHandler from "./middleware/globalErrorHandler";
+import notFoundHandler from "./middleware/notFound";
+//Routers
+import userRouter from "./routes/userRouter";
 
 const app = express();
 const PORT = process.env.PORT || 3001;
@@ -10,26 +16,15 @@ app.use(express.urlencoded({ extended: true }));
 // app.use(express.static(path.join(__dirname, "../../../dist")));
 
 // app.use("/api", mainRouter);
-
+app.use("/api/user", userRouter);
 
 // Catch-all route to serve the React app for any unmatched routes
 // app.get("*", (_, res) => {
 //   res.sendFile(path.join(__dirname, "../dist/index.html"));
 // });
 
-// const globalErrorHandler: ErrorRequestHandler= (error: ServerError, _req: Request, res: Response, _next: NextFunction) => {
-//   const defaultErr: ServerError = {
-//     log: "Express error handler caught unknown middleware error",
-//     status: HttpCode.INTERNAL_SERVER_ERROR,
-//     message: "An error occured",
-//   };
-//   const errorObj = Object.assign({}, defaultErr, error);
-//   console.log(errorObj.log);
-//   res.status(errorObj.status).json(errorObj.message);
-// }
-
-// //global error handler
-// app.use(globalErrorHandler);
+app.use("api/*", notFoundHandler);
+app.use(globalErrorHandler);
 
 app.listen(PORT, () => {
   console.log(`[server]: Server is running at http://localhost:${PORT}`);
