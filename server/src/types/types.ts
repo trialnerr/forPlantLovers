@@ -7,9 +7,11 @@ export enum HttpCode {
   INTERNAL_SERVER_ERROR = 500,
 }
 
-export type ServerError = Error & {
-  name?:string,
-  log: string;
+export interface ServerError extends Error {
   status: HttpCode;
-  message: string;
+  log?: string; 
 };
+
+
+
+
