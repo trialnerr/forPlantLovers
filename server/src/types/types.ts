@@ -1,3 +1,5 @@
+import { Request } from "express-serve-static-core";
+
 export enum HttpCode {
   OK = 200,
   NO_CONTENT = 204,
@@ -9,13 +11,13 @@ export enum HttpCode {
 
 export interface ServerError extends Error {
   status: HttpCode;
-  log?: string; 
-};
+  log?: string;
+}
 
 export interface UserRegistrationRequestBody {
-  userName: string; 
-  email: string; 
-  password: string; 
+  userName: string;
+  email: string;
+  password: string;
 }
 
 export interface UserLoginRequestBody {
@@ -23,4 +25,6 @@ export interface UserLoginRequestBody {
   password: string;
 }
 
-
+export interface UserRequest extends Request {
+  cookies: { refreshToken: string };
+}

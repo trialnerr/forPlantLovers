@@ -14,7 +14,6 @@ await connectDB();
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-// eslint-disable-next-line @typescript-eslint/no-unsafe-call
 app.use(cookieParser());
 
 //serve static files from the dist folder during production

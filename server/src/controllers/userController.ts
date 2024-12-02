@@ -1,9 +1,19 @@
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 import { NextFunction, Request, Response } from "express";
-import { HttpCode, UserLoginRequestBody, UserRegistrationRequestBody } from "../types/types";
+import {
+  HttpCode,
+  UserLoginRequestBody,
+  UserRequest,
+  UserRegistrationRequestBody,
+} from "../types/types";
 import { IUser, User } from "../models/User";
 import { createServerError } from "../utils/createServerError";
-import { generateAccessToken, generateRefreshToken } from "../utils/generateTokenFunctions";
+import {
+  generateAccessToken,
+  generateRefreshToken,
+} from "../utils/generateTokenFunctions";
+import RefreshToken from "../models/RefreshTokens";
+import { Types } from "mongoose";
 
 const createUser = async (
   req: Request<object, object, UserRegistrationRequestBody>,
@@ -67,7 +77,7 @@ const verifyUser = async (
   try {
     const { email, password } = req.body;
 
-    const user = await User.findOne({ email }) as IUser;
+    const user = (await User.findOne({ email })) as IUser;
     if (!user) {
       return next(
         createServerError(
@@ -88,8 +98,7 @@ const verifyUser = async (
       );
     }
 
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-call
-    const userId: string = user.id.toString() as string; 
+    const userId = user._id as Types.ObjectId;
     const accessToken = generateAccessToken(userId, email);
     const refreshToken = generateRefreshToken(userId, email);
 
@@ -118,12 +127,38 @@ const verifyUser = async (
   }
 };
 
-// const logoutUser = async (req: Request, res: Response, next: NextFunction){
-
-// }
+const logoutUser = async (
+  req: UserRequest,
+  res: Response,
+  next: NextFunction,
+) => {
+  //invalidate the refreshToken
+  //clear refreshTokenCookie
+  try {
+    console.log(req.cookies);
+    const refreshToken: string = req.cookies.refreshToken;
+    console.log(refreshToken);
+    await RefreshToken.findOneAndUpdate({ refreshToken }, { isValid: false });
+    res.clearCookie("refreshToken", {
+      httpOnly: true,
+      secure: true,
+      sameSite: true,
+    });
+    next();
+  } catch (error) {
+    next(
+      createServerError(
+        "error logging out",
+        HttpCode.INTERNAL_SERVER_ERROR,
+        `Error logging out, ${error}`,
+      ),
+    );
+  }
+};
 const userController = {
   createUser,
-  verifyUser
+  verifyUser,
+  logoutUser,
 };
 
 export default userController;
