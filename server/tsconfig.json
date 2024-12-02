@@ -23,7 +23,8 @@
     "noImplicitReturns": true,
     // "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true,
-    "noUncheckedSideEffectImports": true
+    "noUncheckedSideEffectImports": true, 
+    "allowJs": true,
   },
   "include": ["src/**/*.ts"],
   "exclude": ["node_modules"]
