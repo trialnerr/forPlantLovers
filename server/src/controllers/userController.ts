@@ -29,23 +29,30 @@ const createUser = async (
     }
     const user = new User({ email, password, userName });
     await user.save();
-
     
+    //accessToken
     // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-call
     const token: string = jwt.sign(
       { userId: user._id, email: user.email },
-      process.env.JWT_SECRET,
+      env.JWT_ACCESS_SECRET,
+      { expiresIn: "15mins" },
+    );
+    //refreshToken
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-call
+    const refreshToken: string = jwt.sign(
+      { userId: user._id, email: user.email },
+      env.JWT_REFRESH_SECRET,
       { expiresIn: "2 days" },
     );
 
-    res.cookie("token", token, {
+    res.cookie("refreshToken", refreshToken, {
       httpOnly: true, 
       secure: true, 
       sameSite: true,
       maxAge: 7200000, //2hr (time in milliseconds)
     });
 
-    res.locals.user = { user_id: user._id, user: user.userName };
+    res.locals.user = { user_id: user._id, user: user.userName, accessToken: token };
 
     next();
   } catch (error) {
@@ -66,16 +73,16 @@ const verifyUser = async (
 ) => {
   try {
     const { email, password } = req.body;
-   
+
     const user = await User.findOne({ email });
     if (!user) {
-       return next(
-         createServerError(
-           "Invalid credentials",
-           HttpCode.BAD_REQUEST,
-           "Email doesnt exist in db!",
-         ),
-       );
+      return next(
+        createServerError(
+          "Invalid credentials",
+          HttpCode.BAD_REQUEST,
+          "Email doesnt exist in db!",
+        ),
+      );
     }
     const isMatch: boolean = await user.comparePassword(password);
     if (!isMatch) {
@@ -88,21 +95,34 @@ const verifyUser = async (
       );
     }
 
+    //accessToken
     // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-call
     const token: string = jwt.sign(
       { userId: user._id, email: user.email },
-      env.JWT_SECRET,
+      env.JWT_ACCESS_SECRET,
+      { expiresIn: "15mins" },
+    );
+
+    //refreshToken
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-call
+    const refreshToken: string = jwt.sign(
+      { userId: user._id, email: user.email },
+      env.JWT_REFRESH_SECRET,
       { expiresIn: "2 days" },
     );
 
-    res.cookie("token", token, {
+    res.cookie("refreshToken", refreshToken, {
       httpOnly: true,
       secure: true,
       sameSite: true,
       maxAge: 7200000, //2hr (time in milliseconds)
     });
 
-    res.locals.user = { user_id: user._id, user: user.userName };
+    res.locals.user = {
+      user_id: user._id,
+      user: user.userName,
+      accessToken: token,
+    };
 
     next();
   } catch (error) {
@@ -115,7 +135,6 @@ const verifyUser = async (
     );
   }
 };
-
 
 const userController = {
   createUser,
