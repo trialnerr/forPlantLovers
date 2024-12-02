@@ -8,9 +8,10 @@ declare global {
       CLOUDINARY_API_KEY: string;
       CLOUDINARY_API_SECRET: string;
       JWT_ACCESS_SECRET: string;
+      SESSION_SECRET: string;
       JWT_REFRESH_SECRET: string;
-      SALT_ROUNDS: number; 
-      DB_STRING: string; 
+      SALT_ROUNDS: number;
+      DB_STRING: string;
       ENV: "test" | "development" | "production";
     }
   }
