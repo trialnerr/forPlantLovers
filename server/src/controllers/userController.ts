@@ -1,12 +1,9 @@
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 import { NextFunction, Request, Response } from "express";
 import { HttpCode, UserLoginRequestBody, UserRegistrationRequestBody } from "../types/types";
-import { User } from "../models/User";
+import { IUser, User } from "../models/User";
 import { createServerError } from "../utils/createServerError";
-import jwt from "jsonwebtoken";
-// import { configDotenv } from "dotenv";
-// configDotenv();
-import { env } from 'node:process';
+import { generateAccessToken, generateRefreshToken } from "../utils/generateTokenFunctions";
 
 const createUser = async (
   req: Request<object, object, UserRegistrationRequestBody>,
@@ -17,7 +14,7 @@ const createUser = async (
     const { email, password, userName } = req.body;
 
     const existingUser = await User.findOne({ email });
-    //should I redirect to signup here? 
+    //should I redirect to signup here?
     if (existingUser) {
       return next(
         createServerError(
@@ -29,30 +26,26 @@ const createUser = async (
     }
     const user = new User({ email, password, userName });
     await user.save();
-    
-    //accessToken
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-call
-    const token: string = jwt.sign(
-      { userId: user._id, email: user.email },
-      env.JWT_ACCESS_SECRET,
-      { expiresIn: "15mins" },
-    );
-    //refreshToken
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-call
-    const refreshToken: string = jwt.sign(
-      { userId: user._id, email: user.email },
-      env.JWT_REFRESH_SECRET,
-      { expiresIn: "2 days" },
-    );
+
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-call
+    const userId: string = user.id.toString() as string;
+    const accessToken = generateAccessToken(userId, email);
+    const refreshToken = generateRefreshToken(userId, email);
 
     res.cookie("refreshToken", refreshToken, {
-      httpOnly: true, 
-      secure: true, 
+      httpOnly: true,
+      secure: true,
       sameSite: true,
-      maxAge: 7200000, //2hr (time in milliseconds)
+      maxAge: 7 * 24 * 60 * 60 * 1000, //7 days
     });
 
-    res.locals.user = { user_id: user._id, user: user.userName, accessToken: token };
+    res.locals.user = {
+      userId,
+      user: user.userName,
+      accessToken,
+    };
+
+    next();
 
     next();
   } catch (error) {
@@ -74,7 +67,7 @@ const verifyUser = async (
   try {
     const { email, password } = req.body;
 
-    const user = await User.findOne({ email });
+    const user = await User.findOne({ email }) as IUser;
     if (!user) {
       return next(
         createServerError(
@@ -95,33 +88,22 @@ const verifyUser = async (
       );
     }
 
-    //accessToken
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-call
-    const token: string = jwt.sign(
-      { userId: user._id, email: user.email },
-      env.JWT_ACCESS_SECRET,
-      { expiresIn: "15mins" },
-    );
-
-    //refreshToken
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-call
-    const refreshToken: string = jwt.sign(
-      { userId: user._id, email: user.email },
-      env.JWT_REFRESH_SECRET,
-      { expiresIn: "2 days" },
-    );
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-call
+    const userId: string = user.id.toString() as string; 
+    const accessToken = generateAccessToken(userId, email);
+    const refreshToken = generateRefreshToken(userId, email);
 
     res.cookie("refreshToken", refreshToken, {
       httpOnly: true,
       secure: true,
       sameSite: true,
-      maxAge: 7200000, //2hr (time in milliseconds)
+      maxAge: 7 * 24 * 60 * 60 * 1000, //7days
     });
 
     res.locals.user = {
-      user_id: user._id,
+      userId,
       user: user.userName,
-      accessToken: token,
+      accessToken,
     };
 
     next();
@@ -136,6 +118,9 @@ const verifyUser = async (
   }
 };
 
+// const logoutUser = async (req: Request, res: Response, next: NextFunction){
+
+// }
 const userController = {
   createUser,
   verifyUser
