@@ -1,6 +1,51 @@
+import { FormEvent, useContext, useRef, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import ErrorMessage from "./ErrorMessage";
+import { AuthContext } from "../context/authContext";
+import { userData } from "../types";
+
 function Register() {
+  const context = useContext(AuthContext);
+  const emailRef = useRef<HTMLInputElement>(null);
+  const passwordRef = useRef<HTMLInputElement>(null);
+  const confirmPasswordRef = useRef<HTMLInputElement>(null);
+  const [errMsg, setErrMsg] = useState<string>("");
+  const navigate = useNavigate();
+  console.log(context, 'in register');
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const email: string | undefined = emailRef.current?.value;
+    const password: string | undefined = passwordRef.current?.value;
+    const confirmPassword: string | undefined =
+      confirmPasswordRef.current?.value;
+    //post request to /api/user/register
+    console.log(email, password, confirmPassword);
+    if (password !== confirmPassword) {
+      setErrMsg("Passwords do not match");
+      return;
+    }
+    const response = await fetch("/api/user/register", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ email, password }),
+      credentials: "include",
+    });
+   if (!response.ok) {
+     const { msg } = await response.json();
+     setErrMsg(msg);
+   } else {
+     const result: userData = await response.json();
+     //set the currentuser and then navigate to identify
+     context?.login(result);
+     navigate("/identify");
+   }
+  };
+
   return (
-    <form className="w-full">
+    <form onSubmit={handleSubmit} className="w-full">
+      <ErrorMessage errMsg={errMsg} />
       <h1 className="text-3xl font-bold mb-8 text-gray-900">Register</h1>
       <div className="mb-6">
         <label
@@ -10,10 +55,11 @@ function Register() {
           Your email
         </label>
         <input
+          ref={emailRef}
           type="email"
           id="email"
           className="w-full p-4 text-sm border rounded-lg focus:ring-blue-500 focus:border-blue-500"
-          placeholder="example@example.com"
+          placeholder="Enter your email"
           required
         />
       </div>
@@ -25,8 +71,10 @@ function Register() {
           Your password
         </label>
         <input
+          ref={passwordRef}
           type="password"
           id="password"
+          minLength={8}
           className="w-full p-4 text-sm border rounded-lg focus:ring-blue-500 focus:border-blue-500"
           required
         />
@@ -39,13 +87,16 @@ function Register() {
           Repeat password
         </label>
         <input
+          ref={confirmPasswordRef}
           type="password"
           id="repeat-password"
+          minLength={8}
           className="w-full p-4 text-sm border rounded-lg focus:ring-blue-500 focus:border-blue-500"
           required
         />
       </div>
-      <div className="flex items-start mb-6">
+      {/* commented out the terms and conditions checkbox */}
+      {/* <div className="flex items-start mb-6">
         <input
           id="terms"
           type="checkbox"
@@ -61,12 +112,12 @@ function Register() {
             terms and conditions
           </a>
         </label>
-      </div>
+      </div> */}
       <button
         type="submit"
         className="w-full py-4 text-white bg-blue-600 rounded-lg hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 text-lg mb-4"
       >
-        Register new account
+        Register
       </button>
       <p className="text-sm text-center text-gray-600">
         Already have an account?{" "}
@@ -78,4 +129,4 @@ function Register() {
   );
 }
 
-export default Register; 
+export default Register;
