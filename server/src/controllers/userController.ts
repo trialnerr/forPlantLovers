@@ -1,19 +1,14 @@
+/* eslint-disable @typescript-eslint/no-unsafe-call */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 import { NextFunction, Request, Response } from "express";
 import {
   HttpCode,
   UserLoginRequestBody,
-  UserRequest,
   UserRegistrationRequestBody,
 } from "../types/types";
-import { IUser, User } from "../models/User";
+import { User } from "../models/User";
 import { createServerError } from "../utils/createServerError";
-import {
-  generateAccessToken,
-  generateRefreshToken,
-} from "../utils/generateTokenFunctions";
-import RefreshToken from "../models/RefreshTokens";
-import { Types } from "mongoose";
+import passport from "passport";
 
 const createUser = async (
   req: Request<object, object, UserRegistrationRequestBody>,
@@ -21,10 +16,8 @@ const createUser = async (
   next: NextFunction,
 ) => {
   try {
-    const { email, password, userName } = req.body;
-
+    const { email, password } = req.body;
     const existingUser = await User.findOne({ email });
-    //should I redirect to signup here?
     if (existingUser) {
       return next(
         createServerError(
@@ -34,30 +27,13 @@ const createUser = async (
         ),
       );
     }
-    const user = new User({ email, password, userName });
-    await user.save();
-
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-call
-    const userId: string = user.id.toString() as string;
-    const accessToken = generateAccessToken(userId, email);
-    const refreshToken = generateRefreshToken(userId, email);
-
-    res.cookie("refreshToken", refreshToken, {
-      httpOnly: true,
-      secure: true,
-      sameSite: true,
-      maxAge: 7 * 24 * 60 * 60 * 1000, //7 days
+    const user = await User.create({ email, password });
+    req.login(user, (err) => {
+      if (err) {
+        return next(err);
+      }
+      next();
     });
-
-    res.locals.user = {
-      userId,
-      user: user.userName,
-      accessToken,
-    };
-
-    next();
-
-    next();
   } catch (error) {
     return next(
       createServerError(
@@ -69,81 +45,75 @@ const createUser = async (
   }
 };
 
-const verifyUser = async (
+const authenticateUser = (
   req: Request<object, object, UserLoginRequestBody>,
   res: Response,
   next: NextFunction,
 ) => {
-  try {
-    const { email, password } = req.body;
-
-    const user = (await User.findOne({ email })) as IUser;
+  passport.authenticate("local", (err, user: Express.User, _info) => {
+    if (err) {
+      return next(
+        createServerError(
+          "Something went wrong",
+          HttpCode.INTERNAL_SERVER_ERROR,
+          `Error logging in user, ${err}`,
+        ),
+      );
+    }
     if (!user) {
       return next(
         createServerError(
-          "Invalid credentials",
-          HttpCode.BAD_REQUEST,
-          "Email doesnt exist in db!",
+          "Invalid email or password",
+          HttpCode.UNAUTHORIZED,
+          "Invalid email or password",
         ),
       );
     }
-    const isMatch: boolean = await user.comparePassword(password);
-    if (!isMatch) {
-      return next(
-        createServerError(
-          "Invalid credentials",
-          HttpCode.BAD_REQUEST,
-          "Incorrect password",
-        ),
-      );
-    }
-
-    const userId = user._id as Types.ObjectId;
-    const accessToken = generateAccessToken(userId, email);
-    const refreshToken = generateRefreshToken(userId, email);
-
-    res.cookie("refreshToken", refreshToken, {
-      httpOnly: true,
-      secure: true,
-      sameSite: true,
-      maxAge: 7 * 24 * 60 * 60 * 1000, //7days
+    req.login(user, (err) => {
+      if (err) {
+        return next(
+          createServerError(
+            "Something went wrong",
+            HttpCode.INTERNAL_SERVER_ERROR,
+            `Error logging in user, ${err}`,
+          ),
+        );
+      }
+      next();
     });
-
-    res.locals.user = {
-      userId,
-      user: user.userName,
-      accessToken,
-    };
-
-    next();
-  } catch (error) {
-    return next(
-      createServerError(
-        "Something went wrong",
-        HttpCode.INTERNAL_SERVER_ERROR,
-        `Error creating new user, ${error}`,
-      ),
-    );
-  }
+  })(req, res, next);
 };
 
-const logoutUser = async (
-  req: UserRequest,
-  res: Response,
-  next: NextFunction,
-) => {
-  //invalidate the refreshToken
-  //clear refreshTokenCookie
+const logoutUser = (req: Request, res: Response, next: NextFunction) => {
   try {
     console.log(req.cookies);
-    const refreshToken: string = req.cookies.refreshToken;
-    console.log(refreshToken);
-    await RefreshToken.findOneAndUpdate({ refreshToken }, { isValid: false });
-    res.clearCookie("refreshToken", {
-      httpOnly: true,
-      secure: true,
-      sameSite: true,
+    req.logout((err) => {
+      if (err) {
+        return next(
+          createServerError(
+            "error logging out",
+            HttpCode.INTERNAL_SERVER_ERROR,
+            `Error logging out, ${err}`,
+          ),
+        );
+      }
+      req.session.destroy((err) => {
+        if (err)
+          console.log(
+            "Error : Failed to destroy the session during logout.",
+            err,
+          );
+        req.user = undefined;
+      });
+      console.log("logged out");
+
     });
+    
+    // res.clearCookie("connect.sid");
+    console.log(req.isAuthenticated()); //logged false!
+    console.log(req.cookies); //
+    console.log(req.session); //undefined 
+    console.log(req.user); //null
     next();
   } catch (error) {
     next(
@@ -157,7 +127,7 @@ const logoutUser = async (
 };
 const userController = {
   createUser,
-  verifyUser,
+  authenticateUser,
   logoutUser,
 };
 
