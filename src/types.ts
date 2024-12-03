@@ -116,5 +116,6 @@ export type AuthState = {
   user: userData | null;
   login: (user: userData) => void;
   logout: () => void;
+  loading: boolean; 
 };
    
