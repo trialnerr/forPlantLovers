@@ -26,6 +26,6 @@
     "noUncheckedSideEffectImports": true, 
     "allowJs": true,
   },
-  "include": ["src/**/*.ts"],
+  "include": ["src/**/*.ts", "src/middleware/auth.ts", "src/routes/main.js"],
   "exclude": ["node_modules"]
 }
