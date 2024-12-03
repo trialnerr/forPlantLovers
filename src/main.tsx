@@ -8,6 +8,8 @@ import Main from "./pages/Main.tsx";
 import Identify from "./pages/Identify.tsx";
 import RegisterPage from "./pages/RegisterPage.tsx";
 import SignInPage from "./pages/SignInPage.tsx";
+import { AuthProvider } from "./context/authProvider.tsx";
+import ProtectedRoute from "./components/ProtectedRoute.tsx";
 
 const router = createBrowserRouter(
   [
@@ -22,7 +24,11 @@ const router = createBrowserRouter(
         },
         {
           path: "/identify",
-          element: <Identify />,
+        element: (
+          <ProtectedRoute>
+            <Identify />
+          </ProtectedRoute>
+        )
         },
         {
           path: "/register",
@@ -48,6 +54,8 @@ const router = createBrowserRouter(
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
-    <RouterProvider router={router} future={{ v7_startTransition: true }} />
+    <AuthProvider>
+      <RouterProvider router={router} future={{ v7_startTransition: true }} />
+    </AuthProvider>
   </StrictMode>,
 );
