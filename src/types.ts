@@ -108,5 +108,13 @@ export type ApiImagesAndResultsResponse = {
   images: ApiImageResponse; 
 }
 
-
+export type userData = {
+  email: string;
+  _id: string;
+};
+export type AuthState = {
+  user: userData | null;
+  login: (user: userData) => void;
+  logout: () => void;
+};
    
