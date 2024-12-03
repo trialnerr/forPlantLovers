@@ -1,4 +1,6 @@
-import { Request } from "express-serve-static-core";
+import { Request } from "express";
+import { IUser } from "../models/User";
+import { HydratedDocument } from "mongoose";
 
 export enum HttpCode {
   OK = 200,
@@ -25,6 +27,15 @@ export interface UserLoginRequestBody {
   password: string;
 }
 
-export interface UserRequest extends Request {
-  cookies: { refreshToken: string };
+// export interface UserRequest extends Request {
+//   cookies: { refreshToken: string };
+// }
+
+export type Images = {
+  url: string;
+  public_id: string;
+}; 
+
+export interface PassportRequest extends Request {
+  user: HydratedDocument<IUser>;
 }
