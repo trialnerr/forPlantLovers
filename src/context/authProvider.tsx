@@ -26,7 +26,7 @@ export const AuthProvider = ({ children }: PropsWithChildren) => {
         setUser(null);
       }
        finally {
-        setLoading(false); // Loading is complete
+        setLoading(false); 
       }
     };
     checkLoggedIn();
