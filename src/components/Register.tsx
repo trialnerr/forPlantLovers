@@ -1,5 +1,5 @@
 import { FormEvent, useContext, useRef, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Navigate, useNavigate } from "react-router-dom";
 import ErrorMessage from "./ErrorMessage";
 import { AuthContext } from "../context/authContext";
 import { userData } from "../types";
@@ -11,19 +11,23 @@ function Register() {
   const confirmPasswordRef = useRef<HTMLInputElement>(null);
   const [errMsg, setErrMsg] = useState<string>("");
   const navigate = useNavigate();
-  console.log(context, 'in register');
+
+  if (context?.user) {
+    return <Navigate to="/" replace />;
+  }
+  
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const email: string | undefined = emailRef.current?.value;
     const password: string | undefined = passwordRef.current?.value;
     const confirmPassword: string | undefined =
       confirmPasswordRef.current?.value;
-    //post request to /api/user/register
-    console.log(email, password, confirmPassword);
+  
     if (password !== confirmPassword) {
       setErrMsg("Passwords do not match");
       return;
     }
+
     const response = await fetch("/api/user/register", {
       method: "POST",
       headers: {
