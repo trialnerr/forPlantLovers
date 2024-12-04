@@ -9,7 +9,7 @@ export interface IUser extends Document {
       plantID: Types.ObjectId;
       idDate: Date;
       idPlace: string;
-      uploadedImages: string[]; //array of cloudinary ids
+      uploadedImages: string[];
       notes: string;
     },
   ];
@@ -22,18 +22,19 @@ const UserSchema = new Schema<IUser>({
   email: { type: String, required: true, unique: true },
   password: { type: String, required: true },
   avatar: String,
-  gallery: [
-    {
-      plantID: {
-        type: Schema.Types.ObjectId,
-        ref: "Plant",
-      },
-      idDate: Date,
-      idPlace: String,
-      uploadedImages: [String],
-      notes: String,
-    },
-  ],
+  // gallery: [
+  //   {
+  //     plantID: {
+  //       type: Schema.Types.ObjectId,
+  //       ref: "Plant",
+  //     },
+  //     idDate: Date,
+  //     idPlace: String,
+  //     uploadedImages: [String],
+  //     notes: String,
+  //   },
+  // ],
+
   createdAt: { type: Date, default: Date.now },
 });
 
