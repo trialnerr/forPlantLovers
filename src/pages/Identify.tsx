@@ -1,6 +1,6 @@
 import { useState } from "react";
 import Upload from "../components/Upload";
-import { Organ, OrganType, PlantIdResults, ApiImagesAndResultsResponse } from "../types";
+import { Organ, OrganType, PlantIdResults, ApiImagesAndResultsResponse, Species } from "../types";
 import OrganChoiceModal from "../components/OrganChoiceModal";
 import ImageDisplay from "../components/ImageDisplay";
 import ResultCard from "../components/ResultCard";
@@ -11,6 +11,7 @@ function Identify() {
   const [currImage, setCurrImage] = useState<File | null>(null);
   const [openModal, setModalOpen] = useState<boolean>(false);
   const [identification, setIdentification] = useState<PlantIdResults | null>(null);
+  const [identifiedPlant, setIdentifiedPlant] = useState<Species| null>(null); 
 
   const imageDisplayComponents: JSX.Element[] = [];
   for (let i = 0; i < 4; i++) {
@@ -78,6 +79,13 @@ function Identify() {
     }
   }
 
+  function handleAddSpecies(selectedId: number) {
+    console.log(selectedId)
+    if (identification) {
+      setIdentifiedPlant(identification[0].species);
+    }
+  }
+
   return (
     <main className="relative isolate px-6 pt-6 lg:px-8 min-h-[calc(100vh-2rem)] content-center">
       <div className="mx-auto max-w-6xl">
@@ -114,7 +122,7 @@ function Identify() {
             {identification
               ? identification.map((el, i) => {
                   console.log({ el });
-                  return <ResultCard result={el} key={`resultCard${i}`} />;
+                return <ResultCard result={el} key={`resultCard${i}`} id={i} handleAddSpecies={handleAddSpecies } />;
                 })
               : null}
           </section>
