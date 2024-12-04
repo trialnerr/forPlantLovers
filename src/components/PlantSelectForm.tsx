@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { FormEvent, useContext } from "react";
 import { PlantSelectFormProps } from "../types";
 import { AuthContext } from "../context/authContext";
 
@@ -14,28 +14,30 @@ function PlantSelectForm({ identifiedPlant, apiImages }: PlantSelectFormProps) {
   
   //send a request to save the plant to plant model 
   //then save the note to the noteDb
-  async function handleSavePlantAndNote() {
-    console.log('saving plant and note!');
+  async function handleSavePlantAndNote(e: FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+    
     if (identifiedPlant && apiImages) {
       const { commonNames, scientificName, genus } = identifiedPlant;
       const genusScientificName: string = genus.scientificName;
-    
-      const formData = new FormData;
-      commonNames.forEach((commonName: string) => {
-        formData.append('commonName', commonName);
-      })
-      formData.append('genus', genusScientificName);
-      formData.append('scientificName', scientificName);
-      formData.append('postedBy', userId);
-      apiImages.forEach((imgObj) => {
-         formData.append("apiImages", imgObj.url);
-      })
 
+      const formData = {
+        commonNames,
+        genus: genusScientificName,
+        scientificName,
+        postedBy: userId,
+        apiImages: apiImages.map((imgObj) => imgObj.url),
+      };
+      console.log("saving plant and note!", formData);
       const response = await fetch("api/plant/create", {
         method: "POST",
-        body: formData,
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
       });
-
+      const plantID: string = await response.json();
+      
     }
   }
   return (
@@ -115,7 +117,7 @@ function PlantSelectForm({ identifiedPlant, apiImages }: PlantSelectFormProps) {
           <div className="flex items-center space-x-4">
             <button
               type="submit"
-              className="text-white bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center"
+              className="bg-gray-200 hover:bg-slate-500 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center"
             >
               Add plant
             </button>
