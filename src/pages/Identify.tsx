@@ -1,6 +1,6 @@
 import { useState } from "react";
 import Upload from "../components/Upload";
-import { Organ, OrganType, PlantIdResults, PlantIdAPIResults, ApiImagesAndResultsResponse } from "../types";
+import { Organ, OrganType, PlantIdResults, ApiImagesAndResultsResponse } from "../types";
 import OrganChoiceModal from "../components/OrganChoiceModal";
 import ImageDisplay from "../components/ImageDisplay";
 import ResultCard from "../components/ResultCard";
