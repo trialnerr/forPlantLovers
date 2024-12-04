@@ -12,7 +12,7 @@ An app where you can identify plant types, and save them to a personal gallery.
 This app is built using a Node.js backend and a React frontend. The backend handles image processing and plant identification. The frontend provides a user-friendly interface for uploading photos and viewing identified plants.
 
 ## Technologies Used
-Frontend: React, Typescript. 
+Frontend: React, Typescript, TailwindCSS 
 Backend: NodeJs, Cloudinary, MongoDB. 
 
 ## Lessons Learned
