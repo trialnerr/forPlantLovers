@@ -1,6 +1,7 @@
 import { PropsWithChildren, useContext } from "react"
 import { AuthContext } from "../context/authContext"
 import { Navigate, useLocation } from "react-router-dom";
+import Loading from "./Loading";
 
 //this broke everything. It seems that on refresh. 
 function ProtectedRoute({ children }: PropsWithChildren) {
@@ -8,7 +9,7 @@ function ProtectedRoute({ children }: PropsWithChildren) {
   console.log(location.pathname, 'location'); 
   const context = useContext(AuthContext); 
   if (context?.loading) {
-    return <div>Loading...</div>;
+    return <Loading />
   }
   return context?.user ? (
     children
