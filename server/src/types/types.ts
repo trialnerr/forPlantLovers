@@ -109,3 +109,12 @@ export type PlantIdAPIResults = {
   remainingIdentificationRequests: number;
   version: string;
 };
+
+export type CreatePlantBody  = {
+  commonNames: string[];
+  scientificName: string;
+  genus: string;
+  postedBy: string;
+  apiImages: string[];
+  cloudinaryImages: string[];
+};
