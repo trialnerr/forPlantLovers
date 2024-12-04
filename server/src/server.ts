@@ -47,7 +47,7 @@ app.use(passport.session());
 
 //serve static files from the dist folder during production
 // app.use(express.static(path.join(__dirname, "../../../dist")));
-
+// app.use('api/plant', plantRouter);
 app.use("/api", mainRouter);
 app.use("/api/user", userRouter);
 
