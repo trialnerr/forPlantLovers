@@ -14,6 +14,7 @@ import { env } from "process";
 import passportConfig from "./config/passport";
 import cors from "cors";
 import mainRouter from "./routes/mainRouter";
+import plantRouter from "./routes/plantRouter";
 
 const app = express();
 const PORT = process.env.PORT || 3001;
@@ -47,9 +48,9 @@ app.use(passport.session());
 
 //serve static files from the dist folder during production
 // app.use(express.static(path.join(__dirname, "../../../dist")));
-// app.use('api/plant', plantRouter);
-app.use("/api", mainRouter);
+app.use("/api/plant", plantRouter);
 app.use("/api/user", userRouter);
+app.use("/api", mainRouter);
 
 // Catch-all route to serve the React app for any unmatched routes
 // app.get("*", (_, res) => {
