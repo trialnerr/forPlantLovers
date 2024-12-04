@@ -1,13 +1,11 @@
-// import express, { NextFunction, Request, Response } from "express";
+import express from "express";
+import plantController from "../controllers/plantController";
 
-// const plantRouter = express.Router(); 
+const plantRouter = express.Router(); 
 
-// plantRouter.post(
-//   "/create",
-//   plantController.createPlant,
-//   (req: Request, res: Response) => {
-   
-//   },
-// );
+plantRouter.post(
+  "/create",
+  plantController.createPlant
+);
 
-// export default plantRouter; 
+export default plantRouter; 
