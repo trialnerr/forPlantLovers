@@ -1,18 +1,27 @@
 import { useState } from "react";
 import Upload from "../components/Upload";
-import { Organ, OrganType, PlantIdResults, ApiImagesAndResultsResponse, Species } from "../types";
+import {
+  Organ,
+  OrganType,
+  PlantIdResults,
+  ApiImagesAndResultsResponse,
+  Species,
+  ApiImageResponse,
+} from "../types";
 import OrganChoiceModal from "../components/OrganChoiceModal";
 import ImageDisplay from "../components/ImageDisplay";
 import ResultCard from "../components/ResultCard";
-import StorageForm from "../components/StorageForm";
+import PlantSelectForm from "../components/PlantSelectForm";
 
 function Identify() {
   const [organs, setOrgans] = useState<Organ[]>([]);
   const [currImage, setCurrImage] = useState<File | null>(null);
   const [openModal, setModalOpen] = useState<boolean>(false);
-  const [identification, setIdentification] = useState<PlantIdResults | null>(null);
-  const [identifiedPlant, setIdentifiedPlant] = useState<Species| null>(null); 
-
+  const [identification, setIdentification] = useState<PlantIdResults | null>(
+    null,
+  );
+  const [identifiedPlant, setIdentifiedPlant] = useState<Species | null>(null);
+  const [cloudinaryImages, setCloudinaryImages] = useState<ApiImageResponse | null>(null)
   const imageDisplayComponents: JSX.Element[] = [];
   for (let i = 0; i < 4; i++) {
     const imgUrl: string | undefined = organs[i]
@@ -73,17 +82,18 @@ function Identify() {
         body: formData,
       });
       const result: ApiImagesAndResultsResponse = await response.json();
-      setIdentification(result.data.results); 
+      setIdentification(result.data.results);
+      setCloudinaryImages(result.images); 
     } catch (error) {
       console.error("Error identifying image");
     }
   }
 
   function handleAddSpecies(selectedId: number) {
-    console.log(selectedId)
     if (identification) {
-      setIdentifiedPlant(identification[0].species);
+      setIdentifiedPlant(identification[selectedId].species);
     }
+    
   }
 
   return (
@@ -122,11 +132,20 @@ function Identify() {
             {identification
               ? identification.map((el, i) => {
                   console.log({ el });
-                return <ResultCard result={el} key={`resultCard${i}`} id={i} handleAddSpecies={handleAddSpecies } />;
+                  return (
+                    <ResultCard
+                      result={el}
+                      key={`resultCard${i}`}
+                      id={i}
+                      handleAddSpecies={handleAddSpecies}
+                    />
+                  );
                 })
               : null}
           </section>
-          <StorageForm />
+          {identification && (
+            <PlantSelectForm identifiedPlant={identifiedPlant} apiImages={cloudinaryImages}/>
+          )}
         </div>
       </div>
     </main>
