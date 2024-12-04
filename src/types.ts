@@ -101,12 +101,12 @@ export type PlantIdAPIResults = {
 };
 
 export type ApiImageResponse = [
-  {
-    url: string;
-    public_id: string;
-  },
+  ImageResponse
 ];
-
+export type ImageResponse = {
+  url: string;
+  public_id: string;
+};
 export type ApiImagesAndResultsResponse = {
   data: PlantIdAPIResults;
   images: ApiImageResponse;
@@ -129,3 +129,7 @@ export type ResultCardProps = {
   handleAddSpecies: (selectedId: number) => void; 
 };
 
+export type PlantSelectFormProps = {
+  identifiedPlant: Species | null; 
+  apiImages: ApiImageResponse | null;
+}
