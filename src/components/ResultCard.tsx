@@ -2,8 +2,6 @@ import { ResultCardProps } from "../types";
 
 function ResultCard({ result, id, handleAddSpecies  }: ResultCardProps) {
   const { score, species, images } = result; 
-  
-
   return (
     <article className="w-full bg-white border border-gray-200 rounded-lg shadow my-4">
       <div className="w-full p-4 border border-gray-200 bg-gray-50 rounded-t-lg">
