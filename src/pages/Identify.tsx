@@ -93,7 +93,6 @@ function Identify() {
     if (identification) {
       setIdentifiedPlant(identification[selectedId].species);
     }
-    
   }
 
   return (
