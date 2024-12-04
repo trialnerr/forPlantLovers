@@ -13,7 +13,7 @@ import userRouter from "./routes/userRouter";
 import { env } from "process";
 import passportConfig from "./config/passport";
 import cors from "cors";
-// import mainRouter from './routes/main';
+import mainRouter from "./routes/mainRouter";
 
 const app = express();
 const PORT = process.env.PORT || 3001;
@@ -42,19 +42,13 @@ app.use(
   }),
 );
 
-app.use((req, res, next) => {
-  console.log("Session:", req.session);
-  console.log("Session ID:", req.sessionID);
-  next();
-});
-
 app.use(passport.initialize());
 app.use(passport.session());
 
 //serve static files from the dist folder during production
 // app.use(express.static(path.join(__dirname, "../../../dist")));
 
-// app.use("/api", mainRouter);
+app.use("/api", mainRouter);
 app.use("/api/user", userRouter);
 
 // Catch-all route to serve the React app for any unmatched routes
