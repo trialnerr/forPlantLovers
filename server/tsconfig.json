@@ -23,9 +23,13 @@
     "noImplicitReturns": true,
     // "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true,
-    "noUncheckedSideEffectImports": true, 
-    "allowJs": true,
+    "noUncheckedSideEffectImports": true,
+    "allowJs": true
   },
-  "include": ["src/**/*.ts", "src/middleware/auth.ts", "src/routes/main.js"],
+  "include": [
+    "src/**/*.ts",
+    "src/middleware/auth.ts",
+    "src/routes/mainRouter.ts"
+  ],
   "exclude": ["node_modules"]
 }
