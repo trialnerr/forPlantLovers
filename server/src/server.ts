@@ -15,6 +15,7 @@ import passportConfig from "./config/passport";
 import cors from "cors";
 import mainRouter from "./routes/mainRouter";
 import plantRouter from "./routes/plantRouter";
+import plantNoteRouter from "./routes/plantNoteRouter";
 
 const app = express();
 const PORT = process.env.PORT || 3001;
@@ -48,6 +49,7 @@ app.use(passport.session());
 
 //serve static files from the dist folder during production
 // app.use(express.static(path.join(__dirname, "../../../dist")));
+app.use("/api/plantNote", plantNoteRouter);
 app.use("/api/plant", plantRouter);
 app.use("/api/user", userRouter);
 app.use("/api", mainRouter);
