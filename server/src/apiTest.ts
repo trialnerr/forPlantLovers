@@ -5,7 +5,6 @@ import { createServerError } from "./utils/createServerError";
 
 const apiReq = async (organTypes: string[], imgUrls: Images[])  => {
   const urlParams = new URLSearchParams();
-  console.log(organTypes, imgUrls);
   imgUrls.forEach((img) => {
     urlParams.append("images", img.url);
   });
