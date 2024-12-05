@@ -5,7 +5,7 @@ export interface IPlantNote extends Document {
   plantID: Types.ObjectId;
   idDate: Date;
   idPlace: string;
-  note: string;
+  note?: string;
 }
 
 const PlantNotesSchema = new Schema<IPlantNote>({
@@ -29,11 +29,12 @@ const PlantNotesSchema = new Schema<IPlantNote>({
   },
   note: {
     type: String,
-    required: true,
   },
 });
 
 export const PlantNote = model<IPlantNote>("PlantNote", PlantNotesSchema);
+
+
 
 //get all plant notes and associated users
 //add a new plant note 
