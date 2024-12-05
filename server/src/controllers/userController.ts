@@ -85,7 +85,6 @@ const authenticateUser = (
 
 const logoutUser = (req: Request, res: Response, next: NextFunction) => {
   try {
-    console.log(req.cookies);
     req.logout((err) => {
       if (err) {
         return next(
@@ -107,12 +106,6 @@ const logoutUser = (req: Request, res: Response, next: NextFunction) => {
       console.log("logged out");
 
     });
-    
-    // res.clearCookie("connect.sid");
-    console.log(req.isAuthenticated()); //logged false!
-    console.log(req.cookies); //
-    console.log(req.session); //undefined 
-    console.log(req.user); //null
     next();
   } catch (error) {
     next(
