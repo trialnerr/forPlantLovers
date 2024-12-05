@@ -10,6 +10,7 @@ import RegisterPage from "./pages/RegisterPage.tsx";
 import SignInPage from "./pages/SignInPage.tsx";
 import { AuthProvider } from "./context/authProvider.tsx";
 import ProtectedRoute from "./components/ProtectedRoute.tsx";
+import Gallery from "./pages/Gallery.tsx";
 
 const router = createBrowserRouter(
   [
@@ -27,6 +28,14 @@ const router = createBrowserRouter(
         element: (
           <ProtectedRoute>
             <Identify />
+          </ProtectedRoute>
+        )
+        },
+        {
+          path: "/gallery",
+        element: (
+          <ProtectedRoute>
+            <Gallery />
           </ProtectedRoute>
         )
         },
