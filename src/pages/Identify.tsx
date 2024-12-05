@@ -21,8 +21,20 @@ function Identify() {
     null,
   );
   const [identifiedPlant, setIdentifiedPlant] = useState<Species | null>(null);
-  const [cloudinaryImages, setCloudinaryImages] = useState<ApiImageResponse | null>(null)
+  const [cloudinaryImages, setCloudinaryImages] = useState<ApiImageResponse | null>(null);
   const imageDisplayComponents: JSX.Element[] = [];
+  const [done, setDone] = useState<boolean>(false);
+
+  if (done) {
+    setOrgans([]);
+    setCurrImage(null);
+    setModalOpen(false);
+    setIdentification(null);
+    setIdentifiedPlant(null);
+    setCloudinaryImages(null);
+    setDone(false);
+  }
+
   for (let i = 0; i < 4; i++) {
     const imgUrl: string | undefined = organs[i]
       ? URL.createObjectURL(organs[i].image)
@@ -46,8 +58,6 @@ function Identify() {
   }
 
   function handleImageUpload(file: File) {
-    console.log("file added");
-    console.log("looking for", file, "in", organs);
     if (
       !organs.find(
         (organ) =>
@@ -56,7 +66,7 @@ function Identify() {
     ) {
       setCurrImage(file);
     } else {
-      console.log("Image already exists", file);
+      console.log("Image already exists", file); //give a warning to the user? 
       setCurrImage(null);
     }
     setModalOpen(true);
@@ -95,6 +105,10 @@ function Identify() {
     }
   }
 
+  function handleSetDone() {
+    setDone(true);
+  }
+
   return (
     <main className="relative isolate px-6 pt-6 lg:px-8 min-h-[calc(100vh-2rem)] content-center">
       <div className="mx-auto max-w-6xl">
@@ -127,10 +141,10 @@ function Identify() {
               IDENTIFY
             </button>
           </form>
-          <section className="w-full">
-            {identification
-              ? identification.map((el, i) => {
-                  console.log({ el });
+          {!done &&
+            <section className="w-full">
+              {identification
+                ? identification.map((el, i) => {
                   return (
                     <ResultCard
                       result={el}
@@ -140,12 +154,13 @@ function Identify() {
                     />
                   );
                 })
-              : null}
-          </section>
-          {identification && (
-            <PlantSelectForm identifiedPlant={identifiedPlant} apiImages={cloudinaryImages}/>
+                : null}
+            </section>}
+          {!done && identification && (
+            <PlantSelectForm identifiedPlant={identifiedPlant} apiImages={cloudinaryImages} handleSetDone={handleSetDone} />
           )}
         </div>
+
       </div>
     </main>
   );
