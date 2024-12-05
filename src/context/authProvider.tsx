@@ -8,15 +8,12 @@ export const AuthProvider = ({ children }: PropsWithChildren) => {
 
   useEffect(() => {
     const checkLoggedIn = async () => {
-      console.log('i am checking authentication');
       try {
         const response = await fetch("api/user/check", {
           credentials: "include",
         });
-        console.log(response, "in checkLoggedin");
         if (response.ok) {
           const userData = await response.json();
-          console.log(userData, 'in checkLoggedin')
           setUser(userData);
         } else {
           setUser(null);

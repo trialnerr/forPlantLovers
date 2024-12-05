@@ -6,7 +6,6 @@ import Loading from "./Loading";
 //this broke everything. It seems that on refresh. 
 function ProtectedRoute({ children }: PropsWithChildren) {
   const location = useLocation();
-  console.log(location.pathname, 'location'); 
   const context = useContext(AuthContext); 
   if (context?.loading) {
     return <Loading />

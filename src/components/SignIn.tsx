@@ -21,7 +21,6 @@ function SignIn() {
     
     const email: string | undefined = emailRef.current?.value;
     const password: string | undefined = passwordRef.current?.value;
-    console.log(email, password);
     const response = await fetch("/api/user/login", {
       method: "POST",
       headers: {

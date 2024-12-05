@@ -40,7 +40,6 @@ function Upload({ handleImageUpload }: UploadProps): React.JSX.Element {
           onChange={(e) => {
             if (!e.target.files) return;
             const file = e.target.files[0];
-            console.log(file);
             handleImageUpload(file);
           }}
         />
