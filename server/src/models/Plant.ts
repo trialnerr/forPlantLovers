@@ -5,7 +5,6 @@ export interface IPlant extends Document {
   scientificName: string;
   genus: string;
   postedBy: Types.ObjectId; 
-  // apiImages: string[]; 
   cloudinaryImages: string[]; 
 }
 
@@ -22,10 +21,7 @@ const PlantSchema = new Schema<IPlant>({
     type: String, 
     required: true, 
   },
-  // apiImages: {
-  //   type: [String], 
-  //   required: true, 
-  // },
+
   postedBy: {
     type: Schema.Types.ObjectId, 
     ref: "User", 
