@@ -110,11 +110,19 @@ export type PlantIdAPIResults = {
   version: string;
 };
 
-export type CreatePlantBody  = {
+export type CreatePlantBody = {
   commonNames: string[];
   scientificName: string;
   genus: string;
   postedBy: string;
   apiImages: string[];
   cloudinaryImages: string[];
+};
+
+export type CreatePlantNoteBody = {
+  idDate: Date;
+  idPlace: string;
+  note: string;
+  postedBy: string;
+  plantID: string;
 };
