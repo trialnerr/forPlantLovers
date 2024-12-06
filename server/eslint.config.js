@@ -1,7 +1,6 @@
 import eslint from "@eslint/js";
 import tseslint from "typescript-eslint";
 import stylistic from "@stylistic/eslint-plugin";
-import reactHooks from "eslint-plugin-react-hooks"
 
 export default tseslint.config({
   files: ["src/**/*.ts"],
@@ -17,7 +16,6 @@ export default tseslint.config({
   },
   plugins: {
     "@stylistic": stylistic,
-    reactHooks
   },
   ignores: ["dist/*"],
   rules: {
