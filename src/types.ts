@@ -29,9 +29,7 @@ export type ImageDisplayProps = {
   organType: string | undefined;
 };
 
-export type SelectedSpecies = {
-
-}
+export type SelectedSpecies = {};
 
 export type Species = {
   scientificNameWithoutAuthor: string;
@@ -100,9 +98,7 @@ export type PlantIdAPIResults = {
   version: string;
 };
 
-export type ApiImageResponse = [
-  ImageResponse
-];
+export type ApiImageResponse = [ImageResponse];
 export type ImageResponse = {
   url: string;
   public_id: string;
@@ -126,10 +122,53 @@ export type AuthState = {
 export type ResultCardProps = {
   result: PlantIdAPIResult;
   id: number;
-  handleAddSpecies: (selectedId: number) => void; 
+  handleAddSpecies: (selectedId: number) => void;
 };
 
 export type PlantSelectFormProps = {
-  identifiedPlant: Species | null; 
+  identifiedPlant: Species | null;
   apiImages: ApiImageResponse | null;
+  handleSetDone: () => void;
+};
+
+export type PlantNote = {
+  idDate: Date;
+  idPlace: string;
+  note: string;
+};
+
+export type PlantNoteBody = {
+  idDate: Date;
+  idPlace: string;
+  note: string;
+};
+
+export type PlantDataWithNotes = {
+  userPlantsWithNotes: PlantWithNote[]; 
+};
+
+type PlantWithNote = {
+  __v: number,
+  _id: string,
+  cloudinaryImages: string[],
+  commonNames: string[],
+  genus: string,
+  postedBy: string,
+  scientificName: string,
+  notes: PlantNoteResponse[],
+}
+
+export type PlantNoteResponse = {
+  _id: string;
+  idDate: Date;
+  idPlace: string;
+  postedBy: string;
+  plantID: string;
+  note: string;
+  __v: number;
+};
+
+
+export type GalleryCardProps = {
+  plantWithNote: PlantWithNote
 }
