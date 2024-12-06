@@ -6,4 +6,7 @@ const plantNoteRouter = express.Router();
 
 plantNoteRouter.post("/create", plantNoteController.createPlantNote);
 
+plantNoteRouter.delete("/:noteId", plantNoteController.deletePlantNote); 
+
+
 export default plantNoteRouter;
