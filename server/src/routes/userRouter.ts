@@ -41,23 +41,5 @@ userRouter.get("/check", ensureAuth, (req: Request, res: Response) => {
   const { email, _id } = passportReq.user;
   res.status(200).json({ email, _id });
 });
-// userRouter.get(
-//   "/protected",
-//   (req: Request, res: Response) => {
-//     if (!req.isAuthenticated()) {
-//       res.status(401).send("Unauthorized");
-//     }
-//     else {
-//       res.json(req.user);
-//     }
-//   },
-// );
-
-// userRouter.get("/protected", (req: Request, res: Response) => {
-//   if (!req.isAuthenticated()) {
-//     return res.status(401).send("Unauthorized");
-//   }
-//   res.send("Welcome to the protected route!");
-// });
 
 export default userRouter;
