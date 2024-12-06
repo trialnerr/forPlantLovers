@@ -11,6 +11,7 @@ import SignInPage from "./pages/SignInPage.tsx";
 import { AuthProvider } from "./context/authProvider.tsx";
 import ProtectedRoute from "./components/ProtectedRoute.tsx";
 import Gallery from "./pages/Gallery.tsx";
+// import loadGalleryPlants from "./loaders/galleryPlantsLoader.tsx";
 
 const router = createBrowserRouter(
   [
@@ -25,19 +26,19 @@ const router = createBrowserRouter(
         },
         {
           path: "/identify",
-        element: (
-          <ProtectedRoute>
-            <Identify />
-          </ProtectedRoute>
-        )
+          element: (
+            <ProtectedRoute>
+              <Identify />
+            </ProtectedRoute>
+          )
         },
         {
           path: "/gallery",
-        element: (
-          <ProtectedRoute>
-            <Gallery />
-          </ProtectedRoute>
-        )
+          element: (
+            <ProtectedRoute>
+              <Gallery />
+            </ProtectedRoute>
+          ),
         },
         {
           path: "/register",
