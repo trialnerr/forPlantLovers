@@ -26,8 +26,30 @@ const createPlantNote = async (
   }
 };
 
+const deletePlantNote = (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) => {
+  //save the plantNote to the db and sent back the id of the plant
+
+  try {
+    console.log(req.params.noteId);
+    next();
+  } catch (error) {
+    return next(
+      createServerError(
+        "Something went wrong",
+        HttpCode.INTERNAL_SERVER_ERROR,
+        `Error creating new plant Note, ${error}`,
+      ),
+    );
+  }
+};
+
 const plantNoteController = {
   createPlantNote,
+  deletePlantNote
 };
 
 export default plantNoteController;
