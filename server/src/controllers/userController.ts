@@ -104,7 +104,6 @@ const logoutUser = (req: Request, res: Response, next: NextFunction) => {
         req.user = undefined;
       });
       console.log("logged out");
-
     });
     next();
   } catch (error) {
