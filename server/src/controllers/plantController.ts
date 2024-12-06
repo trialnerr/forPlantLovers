@@ -77,22 +77,21 @@ const getAllPlantsAndNotes = async (
   }
 };
 
-const deletePlant = (
+const deletePlant = async (
   req: Request,
   res: Response,
   next: NextFunction,
 ) => {
   try {
     const { plantId } = req.params; 
-    console.log(plantId);
-    res.status(200).json({ plantId });
-    next();
+    await Plant.deleteOne({ _id: new Types.ObjectId(plantId) });
+    res.status(200).send('Plant successfully deleted');
   } catch (error) {
     return next(
       createServerError(
         "Something went wrong",
         HttpCode.INTERNAL_SERVER_ERROR,
-        `Error creating new plant, ${error}`,
+        `Error deleting plant, ${error}`,
       ),
     );
   }
