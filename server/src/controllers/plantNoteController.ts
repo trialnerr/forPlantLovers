@@ -2,14 +2,13 @@ import { NextFunction, Request, Response } from "express";
 import { createServerError } from "../utils/createServerError";
 import { CreatePlantNoteBody, HttpCode } from "../types/types";
 import { PlantNote } from "../models/PlantNote";
+import { Types } from "mongoose";
 
 const createPlantNote = async (
   req: Request<object, object, CreatePlantNoteBody>,
   res: Response,
   next: NextFunction,
 ) => {
-  //save the plantNote to the db and sent back the id of the plant
-
   try {
     const plantNote = await PlantNote.create(req.body);
     const plantNoteId = plantNote._id;
@@ -26,22 +25,21 @@ const createPlantNote = async (
   }
 };
 
-const deletePlantNote = (
+const deletePlantNote = async (
   req: Request,
   res: Response,
   next: NextFunction,
 ) => {
-  //save the plantNote to the db and sent back the id of the plant
-
   try {
-    console.log(req.params.noteId);
-    next();
+    const { noteId } = req.params;
+    await PlantNote.deleteOne({ _id: new Types.ObjectId(noteId) });
+    res.status(200).send("Plant note successfully deleted");
   } catch (error) {
     return next(
       createServerError(
         "Something went wrong",
         HttpCode.INTERNAL_SERVER_ERROR,
-        `Error creating new plant Note, ${error}`,
+        `Error deleting plant Note, ${error}`,
       ),
     );
   }
@@ -49,7 +47,7 @@ const deletePlantNote = (
 
 const plantNoteController = {
   createPlantNote,
-  deletePlantNote
+  deletePlantNote,
 };
 
 export default plantNoteController;
