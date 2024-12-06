@@ -171,4 +171,5 @@ export type PlantNoteResponse = {
 
 export type GalleryCardProps = {
   plantWithNote: PlantWithNote
+  deletePlantAndNote: (plantId: string, noteId: string) => void;
 }
