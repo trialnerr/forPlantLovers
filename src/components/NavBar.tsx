@@ -6,7 +6,7 @@ function NavBar() {
   const context = useContext(AuthContext);
   console.log(context?.user, 'currentUser in navBar'); 
   return (
-    <nav className="bg-gray-200 shadow shadow-gray-300 w-100 px-8 md:px-auto">
+    <nav className="bg-gray-200 shadow shadow-gray-300 w-100 px-8 md:px-auto fixed top-0 left-0 w-full z-20 start-0 border-b">
       <div className="md:h-16 h-28 mx-auto md:px-4 container flex items-center justify-between flex-wrap md:flex-nowrap">
         <div className="text-indigo-500 md:order-1">
           <svg
@@ -34,11 +34,14 @@ function NavBar() {
                 <NavLink to="/identify">Identify a Plant</NavLink>
               </li>
               <li className="md:px-4 md:py-2 hover:text-indigo-400">
-                <NavLink to="/search">Search</NavLink>
-              </li>
-              <li className="md:px-4 md:py-2 hover:text-indigo-400">
                 <NavLink to="/gallery">Gallery</NavLink>
               </li>
+              <li className="md:px-4 md:py-2 hover:text-indigo-400">
+                <NavLink to="/feed">Feed</NavLink>
+              </li>
+              {/* <li className="md:px-4 md:py-2 hover:text-indigo-400">
+                <NavLink to="/search">Search</NavLink>
+              </li> */}
             </ul>
           </div>
         )}
@@ -66,7 +69,7 @@ function NavBar() {
               </NavLink>
             </>
           ) : (
-              <button
+            <button
               onClick={context.logout}
               className="px-4 py-2 bg-indigo-500 hover:bg-indigo-600 text-gray-50 rounded-xl flex items-center gap-2"
             >
