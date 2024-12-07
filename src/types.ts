@@ -168,8 +168,18 @@ export type PlantNoteResponse = {
   __v: number;
 };
 
+export type PlantNoteUpdateBody = {
+  idDate?: Date;
+  idPlace?: string;
+  note?: string;
+};
+
 
 export type GalleryCardProps = {
-  plantWithNote: PlantWithNote
+  plantWithNote: PlantWithNote;
   deletePlantAndNote: (plantId: string, noteId: string) => void;
-}
+  updateNote: (noteId: string, updateBody: PlantNoteUpdateBody) => void;
+};
+
+
+
