@@ -11,6 +11,7 @@ export default {
         transparent: "transparent",
         current: "currentColor",
         grey: "#eee",
+        greyPink: "#F5F1F2",
         red1: "#CF1259",
         darkRed: "#F11440",
         blush: "#E16691",
