@@ -144,19 +144,19 @@ export type PlantNoteBody = {
 };
 
 export type PlantDataWithNotes = {
-  userPlantsWithNotes: PlantWithNote[]; 
+  userPlantsWithNotes: PlantWithNote[];
 };
 
 type PlantWithNote = {
-  __v: number,
-  _id: string,
-  cloudinaryImages: string[],
-  commonNames: string[],
-  genus: string,
-  postedBy: string,
-  scientificName: string,
-  notes: PlantNoteResponse[],
-}
+  __v: number;
+  _id: string;
+  cloudinaryImages: string[];
+  commonNames: string[];
+  genus: string;
+  postedBy: string;
+  scientificName: string;
+  notes: PlantNoteResponse[];
+};
 
 export type PlantNoteResponse = {
   _id: string;
@@ -174,12 +174,20 @@ export type PlantNoteUpdateBody = {
   note?: string;
 };
 
-
 export type GalleryCardProps = {
   plantWithNote: PlantWithNote;
   deletePlantAndNote: (plantId: string, noteId: string) => void;
   updateNote: (noteId: string, updateBody: PlantNoteUpdateBody) => void;
 };
 
+export type CareType = "watering" | "sunlight" | "pruning";
 
+export type PlantCare = {
+  id: number;
+  type: CareType;
+  description: string;
+};
 
+export type PlantCareResponse = {
+  plantCare: PlantCare[];
+};
