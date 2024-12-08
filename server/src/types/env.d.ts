@@ -7,12 +7,12 @@ declare global {
       CLOUD_NAME: string;
       CLOUDINARY_API_KEY: string;
       CLOUDINARY_API_SECRET: string;
-      JWT_ACCESS_SECRET: string;
       SESSION_SECRET: string;
-      JWT_REFRESH_SECRET: string;
       SALT_ROUNDS: number;
       DB_STRING: string;
-      ENV: "test" | "development" | "production";
+      PERENUAL_API_KEY: string;
+      PERENUAL_API_KEY_2: string;
+      PERENUAL_API_KEY_3: string;
     }
   }
 }
