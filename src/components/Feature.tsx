@@ -1,33 +1,22 @@
 import { FeatureProps } from "../types";
 
-const Feature = ({ heading, text }: FeatureProps) => {
 
+const Feature = ({ heading, text, icon}: FeatureProps) => {
   return (
-    <div className="p-4 max-w-sm">
-      <div className="flex rounded-lg h-full dark:bg-gray-800 bg-teal-400 p-8 flex-col">
-        <div className="flex items-center mb-3">
-          <div className="w-8 h-8 mr-3 inline-flex items-center justify-center rounded-full dark:bg-indigo-500 bg-indigo-500 text-white flex-shrink-0">
-            <svg
-              fill="none"
-              stroke="currentColor"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth="2"
-              className="w-5 h-5"
-              viewBox="0 0 24 24"
-            >
-              <path d="M22 12h-4l-3 9L9 3l-3 9H2"></path>
-            </svg>
-          </div>
-          <h2 className="text-white dark:text-white text-lg font-medium">
-            {heading}
-          </h2>
+    <div className="p-4 max-w-sm text-center">
+      <div className="flex rounded-lg h-full p-4 flex-col bg-gray-100 shadow-lg border ">
+        <div className="w-12 h-12 mx-auto mb-2 flex items-center justify-center rounded-full text-green flex-shrink-0 ">
+          <img
+            src={icon}
+            alt=""
+            className="rounded-full w-full h-full object-cover mx-auto"
+          />
+        </div>
+        <div className="flex items-center mb-3 text-center">
+          <h2 className="text-gray-900 text-lg font-medium text-center">{heading}</h2>
         </div>
         <div className="flex flex-col justify-between flex-grow">
-          <p className="leading-relaxed text-base text-white dark:text-gray-300">
-            {text}
-          </p>
-          
+          <p className="leading-relaxed text-base text-gray-700">{text}</p>
         </div>
       </div>
     </div>
