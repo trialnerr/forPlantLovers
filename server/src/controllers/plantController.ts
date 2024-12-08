@@ -1,8 +1,11 @@
 import { NextFunction, Request, Response } from "express";
 import { createServerError } from "../utils/createServerError";
-import { CreatePlantBody, HttpCode } from "../types/types";
+import { CreatePlantBody, HttpCode, PerenualPlantCareData } from "../types/types";
 import { Plant } from "../models/Plant";
 import { Types } from "mongoose";
+import { env } from "process";
+import { MongoDBCacheStore } from "../middleware/MongoDBCacheStore";
+const store = new MongoDBCacheStore(env.DB_STRING, "test", "cache");
 
 const createPlant = async (
   req: Request<object, object, CreatePlantBody>,
@@ -77,15 +80,11 @@ const getAllPlantsAndNotes = async (
   }
 };
 
-const deletePlant = async (
-  req: Request,
-  res: Response,
-  next: NextFunction,
-) => {
+const deletePlant = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const { plantId } = req.params; 
+    const { plantId } = req.params;
     await Plant.deleteOne({ _id: new Types.ObjectId(plantId) });
-    res.status(200).send('Plant successfully deleted');
+    res.status(200).send("Plant successfully deleted");
   } catch (error) {
     return next(
       createServerError(
@@ -96,14 +95,65 @@ const deletePlant = async (
     );
   }
 };
+
+const getPlantCare = async (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) => {
+  try {
+    const { plantId } = req.params;
+    //query the db for the plant
+    //get the genus of the plant
+    //query the perenal api for the speciesID
+    //using the speciesID get plant care tips 
+    //send back a response. 
+    const plant = await Plant.find({ _id: plantId });
+    const genus = plant[0].genus;
+    console.log({ genus });
+  
+    const speciesListApiUrl = `https://perenual.com/api/species-list?key=${env.PERENUAL_API_KEY_2}&page=1&q=${genus}`;
+    
+    const response = await store.find(speciesListApiUrl); 
+    let apiSpeciesId: number | undefined;
+    
+    if (response) {
+      apiSpeciesId = response[0].id;
+    }
+    if (apiSpeciesId) {
+      function delay(ms: number) {
+        return new Promise((resolve) => setTimeout(resolve, ms));
+      }
+      await delay(1500).then(async () => {
+        console.log({ apiSpeciesId });
+        const plantCareApiUrl = `https://perenual.com/api/species-care-guide-list?key=${env.PERENUAL_API_KEY_2}&species_id=${apiSpeciesId}&page=1`;
+        const plantCareRes = await store.find(plantCareApiUrl) as PerenualPlantCareData[]; 
+        const plantCare = plantCareRes[0].section;
+        console.log(plantCare, "plantCare");
+        res.status(200).json({ plantCare });
+      });
+    } else {
+      res.status(404).json({ message: "Species ID not found" });
+    }
+  } catch (error) {
+    return next(
+      // createServerError(
+      //   "Something went wrong",
+      //   HttpCode.INTERNAL_SERVER_ERROR,
+      //   `Error getting plantCare details, ${error}`,
+      // ),
+      error
+    );
+  }
+};
 const plantController = {
   createPlant,
   getAllUserPlants,
   getAllPlantsAndNotes,
-  deletePlant
+  deletePlant,
+  getPlantCare,
 };
 
 export default plantController;
-
 
 // https://studio3t.com/knowledge-base/articles/mongodb-aggregation-framework/#mongodb-lookup
