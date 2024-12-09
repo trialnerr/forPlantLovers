@@ -11,7 +11,7 @@ import passport from "passport";
 
 const createUser = async (
   req: Request<object, object, UserRegistrationRequestBody>,
-  res: Response,
+  _res: Response,
   next: NextFunction,
 ) => {
   try {
@@ -49,15 +49,9 @@ const authenticateUser = (
   res: Response,
   next: NextFunction,
 ) => {
-  passport.authenticate("local", (err, user: Express.User, _info) => {
+  passport.authenticate("local", (err:unknown, user: Express.User) => {
     if (err) {
-      return next(
-        createServerError(
-          "Something went wrong",
-          HttpCode.INTERNAL_SERVER_ERROR,
-          `Error logging in user, ${err}`,
-        ),
-      );
+      return next(err);
     }
     if (!user) {
       return next(
@@ -83,7 +77,7 @@ const authenticateUser = (
   })(req, res, next);
 };
 
-const logoutUser = (req: Request, res: Response, next: NextFunction) => {
+const logoutUser = (req: Request, _res: Response, next: NextFunction) => {
   try {
     req.logout((err) => {
       if (err) {
