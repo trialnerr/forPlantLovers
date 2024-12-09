@@ -4,6 +4,10 @@ export type FeatureProps = {
   icon: string;
 };
 
+export type ErrorMessageProps = {
+  errMsg?: string;
+};
+
 export type Organ = {
   image: File;
   organType: string;
