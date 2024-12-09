@@ -102,14 +102,14 @@ const getPlantCare = async (
   next: NextFunction,
 ) => {
   try {
-    const { plantId } = req.params;
+    const { genus } = req.params;
     //query the db for the plant
     //get the genus of the plant
     //query the perenal api for the speciesID
     //using the speciesID get plant care tips 
     //send back a response. 
-    const plant = await Plant.find({ _id: plantId });
-    const genus = plant[0].genus;
+    // const plant = await Plant.find({ _id: plantId });
+    // const genus = plant[0].genus;
     console.log({ genus });
   
     const speciesListApiUrl = `https://perenual.com/api/species-list?key=${env.PERENUAL_API_KEY_2}&page=1&q=${genus}`;
