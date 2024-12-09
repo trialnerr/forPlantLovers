@@ -17,13 +17,13 @@ function PlantSelectForm({ identifiedPlant, apiImages, handleSetDone  }: PlantSe
     e.preventDefault();
     
     if (identifiedPlant && apiImages) {
-      const { commonNames, scientificName, genus } = identifiedPlant;
+      const { commonNames, scientificNameWithoutAuthor, genus } = identifiedPlant;
       const genusScientificName: string = genus.scientificName;
 
       const plantData = {
         commonNames,
         genus: genusScientificName,
-        scientificName,
+        scientificName: scientificNameWithoutAuthor,
         postedBy: userId,
         cloudinaryImages: apiImages.map((imgObj) => imgObj.url),
       };
