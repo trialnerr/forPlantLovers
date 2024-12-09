@@ -31,6 +31,7 @@ export class MongoDBCacheStore {
     console.log("MongoStore.find", key);
     await this.connect();
     const result = await this.collection?.findOne({ key });
+    console.log({ result }, 'in MongoStore'); 
     if (result) {
       return result.value as
         | PerenualPlantListData[]
