@@ -7,13 +7,11 @@ export type FeatureProps = {
 export type ErrorMessageProps = {
   errMsg?: string;
 };
-
+export type OrganType = "fruit" | "flower" | "bark" | "leaf";
 export type Organ = {
   image: File;
-  organType: string;
+  organType: OrganType;
 };
-
-export type OrganType = "fruit" | "flower" | "bark" | "leaf";
 
 export type UploadProps = {
   handleImageUpload: (imgFile: File) => void;
@@ -31,7 +29,7 @@ export type OrganListItemProps = {
 
 export type ImageDisplayProps = {
   imgUrl: string | undefined;
-  organType: string | undefined;
+  organType: OrganType | undefined;
 };
 
 export type SelectedSpecies = {};
