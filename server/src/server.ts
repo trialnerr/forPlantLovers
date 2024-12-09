@@ -16,6 +16,7 @@ import cors from "cors";
 import mainRouter from "./routes/mainRouter";
 import plantRouter from "./routes/plantRouter";
 import plantNoteRouter from "./routes/plantNoteRouter";
+// import path from "path";
 
 const app = express();
 const PORT = process.env.PORT || 3001;
@@ -46,20 +47,20 @@ app.use(
 
 app.use(passport.initialize());
 app.use(passport.session());
-
-//serve static files from the dist folder during production
-// app.use(express.static(path.join(__dirname, "../../../dist")));
 app.use("/api/plantNote", plantNoteRouter);
 app.use("/api/plant", plantRouter);
 app.use("/api/user", userRouter);
 app.use("/api", mainRouter);
 
+// serve static files from the dist folder during production
+// app.use(express.static(path.join(__dirname, "../../../dist")));
+
+app.use("api/*", notFoundHandler);
 // Catch-all route to serve the React app for any unmatched routes
 // app.get("*", (_, res) => {
 //   res.sendFile(path.join(__dirname, "../dist/index.html"));
 // });
 
-app.use("api/*", notFoundHandler);
 app.use(globalErrorHandler);
 
 app.listen(PORT, () => {
