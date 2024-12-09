@@ -23,6 +23,19 @@ function Gallery() {
     }
   }
 
+  async function updateNote(noteId: string) {
+    await fetch(`/api/plantNote/${noteId}`, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      // body: JSON.stringify()
+    });
+    if (userId) {
+      fetchPlantData(userId);
+    }
+  }
+
   useEffect(() => {
     if (userId) {
       fetchPlantData(userId);
@@ -41,6 +54,7 @@ function Gallery() {
               plantWithNote={plantWithNote}
               key={`galleryCard${i}`}
               deletePlantAndNote={deletePlantAndNote}
+              updateNote={updateNote}
             />
           ))}
         </div>
