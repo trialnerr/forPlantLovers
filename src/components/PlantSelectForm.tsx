@@ -12,7 +12,7 @@ function PlantSelectForm({ identifiedPlant, apiImages, handleSetDone  }: PlantSe
   const idPlaceRef = useRef<HTMLInputElement>(null); 
   const noteRef = useRef<HTMLTextAreaElement>(null); 
 
-  const today = ''; 
+  // const today = ''; 
   async function handleSavePlantAndNote(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
     
