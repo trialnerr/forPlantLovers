@@ -24,7 +24,7 @@ function Identify() {
   const [identifiedPlant, setIdentifiedPlant] = useState<Species | null>(null);
   const [cloudinaryImages, setCloudinaryImages] = useState<ApiImageResponse | null>(null);
   const [done, setDone] = useState<boolean>(false);
-  const [errorMsg, setErrorMsg] = useState<string | undefined>('error message');
+  const [errorMsg, setErrorMsg] = useState<string | undefined>();
 
   function closeMsg() {
     setErrorMsg(undefined); 
