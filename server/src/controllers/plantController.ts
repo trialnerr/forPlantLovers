@@ -112,7 +112,7 @@ const getPlantCare = async (
     // const genus = plant[0].genus;
     console.log({ genus });
   
-    const speciesListApiUrl = `https://perenual.com/api/species-list?key=${env.PERENUAL_API_KEY_2}&page=1&q=${genus}`;
+    const speciesListApiUrl = `https://perenual.com/api/species-list?key=${env.PERENUAL_API_KEY_4}&page=1&q=${genus}`;
     
     const response = await store.find(speciesListApiUrl); 
     let apiSpeciesId: number | undefined;
@@ -121,17 +121,17 @@ const getPlantCare = async (
       apiSpeciesId = response[0].id;
     }
     if (apiSpeciesId) {
-      function delay(ms: number) {
-        return new Promise((resolve) => setTimeout(resolve, ms));
-      }
-      await delay(1500).then(async () => {
+      // function delay(ms: number) {
+      //   return new Promise((resolve) => setTimeout(resolve, ms));
+      // }
+      // await delay(1500).then(async () => {
         console.log({ apiSpeciesId });
-        const plantCareApiUrl = `https://perenual.com/api/species-care-guide-list?key=${env.PERENUAL_API_KEY_2}&species_id=${apiSpeciesId}&page=1`;
+        const plantCareApiUrl = `https://perenual.com/api/species-care-guide-list?key=${env.PERENUAL_API_KEY_4}&species_id=${apiSpeciesId}&page=1`;
         const plantCareRes = await store.find(plantCareApiUrl) as PerenualPlantCareData[]; 
         const plantCare = plantCareRes[0].section;
         console.log(plantCare, "plantCare");
         res.status(200).json({ plantCare });
-      });
+      // });
     } else {
       res.status(404).json({ message: "Species ID not found" });
     }
