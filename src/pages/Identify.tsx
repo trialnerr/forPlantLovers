@@ -110,7 +110,7 @@ function Identify() {
   }
 
   return (
-    <main className="relative isolate px-6 pt-6 lg:px-8 min-h-[calc(100vh-2rem)] content-center my-16">
+    <main className="relative isolate px-6 pt-6 lg:px-8 min-h-[calc(100vh-2rem)] content-center my-16 bg-grey">
       <div className="mx-auto max-w-6xl">
         <div className="text-center flex flex-col h-full">
           <h1 className="text-balance text-3xl font-semibold tracking-tight text-gray-900 sm:text-4xl">
