@@ -126,3 +126,60 @@ export type CreatePlantNoteBody = {
   postedBy: string;
   plantID: string;
 };
+
+export type PerenualPlantCareData = {
+  id: number;
+  species_id: number;
+  common_name: string;
+  scientific_name: string[];
+  section: {
+    id: number;
+    type: string;
+    description: string;
+  }[];
+};
+
+export type PerenualPlantCareResponse = {
+  data: PerenualPlantCareData[];
+  to: number;
+  per_page: number;
+  current_page: number;
+  from: number;
+  last_page: number;
+  total: number;
+};
+
+export type PerenualPlantListData = {
+  id: number;
+  common_name: string;
+  scientific_name: string[];
+  other_name: string[] | null;
+  cycle: string;
+  watering: string;
+  sunlight: string[];
+  default_image: {
+    image_id: number;
+    license: number;
+    license_name: string;
+    license_url: string;
+    original_url: string;
+    regular_url: string;
+    medium_url: string;
+    small_url: string;
+    thumbnail: string;
+  };
+};
+
+export type PerenualPlantListResponse = {
+  data: PerenualPlantListData[];
+  to: number;
+  per_page: number;
+  current_page: number;
+  from: number;
+  last_page: number;
+  total: number;
+};
+
+export type SetOptionsType = {
+  maxAge: number;
+};
