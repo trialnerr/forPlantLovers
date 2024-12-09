@@ -1,19 +1,18 @@
-import { FormEvent, useContext } from "react";
+import { FormEvent, useContext, useRef } from "react";
 import { PlantSelectFormProps } from "../types";
 import { AuthContext } from "../context/authContext";
 
-function PlantSelectForm({ identifiedPlant, apiImages }: PlantSelectFormProps) {
+function PlantSelectForm({ identifiedPlant, apiImages, handleSetDone  }: PlantSelectFormProps) {
   const context = useContext(AuthContext); 
   const userId: string = context?.user?._id as string;
   const species = identifiedPlant?.scientificName;
   identifiedPlant?.genus
-  console.log(apiImages, 'images in plantform'); 
-  
-  
+
+  const idDateRef = useRef<HTMLInputElement>(null); 
+  const idPlaceRef = useRef<HTMLInputElement>(null); 
+  const noteRef = useRef<HTMLTextAreaElement>(null); 
+
   const today = ''; 
-  
-  //send a request to save the plant to plant model 
-  //then save the note to the noteDb
   async function handleSavePlantAndNote(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
     
@@ -21,23 +20,45 @@ function PlantSelectForm({ identifiedPlant, apiImages }: PlantSelectFormProps) {
       const { commonNames, scientificName, genus } = identifiedPlant;
       const genusScientificName: string = genus.scientificName;
 
-      const formData = {
+      const plantData = {
         commonNames,
         genus: genusScientificName,
         scientificName,
         postedBy: userId,
-        apiImages: apiImages.map((imgObj) => imgObj.url),
+        cloudinaryImages: apiImages.map((imgObj) => imgObj.url),
       };
-      console.log("saving plant and note!", formData);
       const response = await fetch("api/plant/create", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(formData),
+        body: JSON.stringify(plantData),
       });
-      const plantID: string = await response.json();
-      
+
+      const result = await response.json();
+      const plantID = result.plantId;
+      const idDate = idDateRef.current?.value; 
+      const idPlace = idPlaceRef.current?.value; 
+      const note = noteRef.current?.value; 
+
+      const plantNoteData = {
+        postedBy: userId,
+        plantID, 
+        idDate,
+        idPlace,
+        note,
+      };
+      const plantNoteSaveResponse = await fetch("api/plantNote/create", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(plantNoteData),
+      });
+
+      if (plantNoteSaveResponse.ok) {
+        setTimeout(() => handleSetDone(), 1000); 
+      }
     }
   }
   return (
@@ -68,15 +89,16 @@ function PlantSelectForm({ identifiedPlant, apiImages }: PlantSelectFormProps) {
             </div>
             <div className="w-full">
               <label
-                htmlFor="brand"
+                htmlFor="idDate"
                 className="block mb-2 text-sm font-medium text-gray-900"
               >
                 Date
               </label>
               <input
+                ref={idDateRef}
                 type="date"
-                name="date"
-                id="brand"
+                name="idDate"
+                id="idDate"
                 className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
                 required
               ></input>
@@ -89,6 +111,7 @@ function PlantSelectForm({ identifiedPlant, apiImages }: PlantSelectFormProps) {
                 Place
               </label>
               <input
+                ref={idPlaceRef}
                 type="text"
                 name="place"
                 id="place"
@@ -97,8 +120,6 @@ function PlantSelectForm({ identifiedPlant, apiImages }: PlantSelectFormProps) {
                 required
               ></input>
             </div>
-           
-         
             <div className="sm:col-span-2">
               <label
                 htmlFor="note"
@@ -107,6 +128,7 @@ function PlantSelectForm({ identifiedPlant, apiImages }: PlantSelectFormProps) {
                 Note
               </label>
               <textarea
+                ref={noteRef}
                 id="note"
                 rows={8}
                 className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-primary-500 focus:border-primary-500"
