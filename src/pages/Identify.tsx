@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Upload from "../components/Upload";
 import {
   Organ,
@@ -12,6 +12,7 @@ import OrganChoiceModal from "../components/OrganChoiceModal";
 import ImageDisplay from "../components/ImageDisplay";
 import ResultCard from "../components/ResultCard";
 import PlantSelectForm from "../components/PlantSelectForm";
+import Toast from "../components/Toast";
 
 function Identify() {
   const [organs, setOrgans] = useState<Organ[]>([]);
@@ -23,6 +24,11 @@ function Identify() {
   const [identifiedPlant, setIdentifiedPlant] = useState<Species | null>(null);
   const [cloudinaryImages, setCloudinaryImages] = useState<ApiImageResponse | null>(null);
   const [done, setDone] = useState<boolean>(false);
+  const [errorMsg, setErrorMsg] = useState<string | undefined>('error message');
+
+  function closeMsg() {
+    setErrorMsg(undefined); 
+  }
 
   if (done) {
     setOrgans([]);
@@ -66,7 +72,8 @@ function Identify() {
     ) {
       setCurrImage(file);
     } else {
-      console.log("Image already exists", file); //give a warning to the user? 
+      console.log("Image already exists", file); 
+      setErrorMsg('The same image cannot be added twice')
       setCurrImage(null);
     }
     setModalOpen(true);
@@ -78,7 +85,6 @@ function Identify() {
     e.preventDefault();
     try {
       const formData: FormData = new FormData();
-      // formData.append("organs", organs)
       const files: File[] = organs.map((organ) => organ.image);
       files.forEach((file) => {
         formData.append("image", file);
@@ -95,7 +101,8 @@ function Identify() {
       setIdentification(result.data.results);
       setCloudinaryImages(result.images); 
     } catch (error) {
-      console.error("Error identifying image");
+      setErrorMsg('Error identifying image');
+      console.error("Error identifying image"); 
     }
   }
 
@@ -151,6 +158,11 @@ function Identify() {
               </button>
             )}
           </form>
+          
+          {errorMsg && <div className='absolute bottom-5 right-5 w-1/5'>
+            <Toast errMsg={errorMsg} closeMsg={closeMsg} />
+          </div>}
+
           {!done && (
             <section className="w-full">
               {identification
