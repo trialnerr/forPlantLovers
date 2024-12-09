@@ -1,6 +1,7 @@
 export type FeatureProps = {
   text: string;
   heading: string;
+  icon: string;
 };
 
 export type Organ = {
@@ -147,7 +148,7 @@ export type PlantDataWithNotes = {
   userPlantsWithNotes: PlantWithNote[];
 };
 
-type PlantWithNote = {
+export type PlantWithNote = {
   __v: number;
   _id: string;
   cloudinaryImages: string[];
@@ -191,3 +192,8 @@ export type PlantCare = {
 export type PlantCareResponse = {
   plantCare: PlantCare[];
 };
+
+export type PlantCareDetailImagesProps = {
+  images : string[]
+}
+
