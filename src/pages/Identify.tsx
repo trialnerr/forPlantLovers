@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Upload from "../components/Upload";
 import {
   Organ,
@@ -22,7 +22,6 @@ function Identify() {
   );
   const [identifiedPlant, setIdentifiedPlant] = useState<Species | null>(null);
   const [cloudinaryImages, setCloudinaryImages] = useState<ApiImageResponse | null>(null);
-  const imageDisplayComponents: JSX.Element[] = [];
   const [done, setDone] = useState<boolean>(false);
 
   if (done) {
@@ -35,6 +34,7 @@ function Identify() {
     setDone(false);
   }
 
+  const imageDisplayComponents: JSX.Element[] = [];
   for (let i = 0; i < 4; i++) {
     const imgUrl: string | undefined = organs[i]
       ? URL.createObjectURL(organs[i].image)
@@ -133,34 +133,48 @@ function Identify() {
             <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-4">
               {imageDisplayComponents}
             </div>
-            <button
-              type="button"
-              onClick={handleIdentify}
-              className="py-2.5 px-5 mb-2 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 w-1/2 mx-auto"
-            >
-              IDENTIFY
-            </button>
+            {organs.length !== 0 ? (
+              <button
+                type="button"
+                onClick={handleIdentify}
+                className="py-2.5 px-5 mb-2 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 w-1/2 mx-auto"
+              >
+                IDENTIFY
+              </button>
+            ) : (
+              <button
+                type="button"
+                className="text-white bg-blue-400 dark:bg-blue-500 cursor-not-allowed font-medium rounded-lg text-sm px-5 py-2.5 text-center"
+                disabled
+              >
+                Disabled button
+              </button>
+            )}
           </form>
-          {!done &&
+          {!done && (
             <section className="w-full">
               {identification
                 ? identification.map((el, i) => {
-                  return (
-                    <ResultCard
-                      result={el}
-                      key={`resultCard${i}`}
-                      id={i}
-                      handleAddSpecies={handleAddSpecies}
-                    />
-                  );
-                })
+                    return (
+                      <ResultCard
+                        result={el}
+                        key={`resultCard${i}`}
+                        id={i}
+                        handleAddSpecies={handleAddSpecies}
+                      />
+                    );
+                  })
                 : null}
-            </section>}
+            </section>
+          )}
           {!done && identification && (
-            <PlantSelectForm identifiedPlant={identifiedPlant} apiImages={cloudinaryImages} handleSetDone={handleSetDone} />
+            <PlantSelectForm
+              identifiedPlant={identifiedPlant}
+              apiImages={cloudinaryImages}
+              handleSetDone={handleSetDone}
+            />
           )}
         </div>
-
       </div>
     </main>
   );
