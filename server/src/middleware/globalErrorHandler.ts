@@ -7,7 +7,7 @@ const globalErrorHandler = (err: ServerError, req: Request, res: Response, _next
   } else {
     res.status(500).json({ msg: err.message });
   }
-  console.log(err.log);
+  console.log(err.log, err.stack);
 };
 
 export default globalErrorHandler;
