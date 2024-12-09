@@ -1,7 +1,7 @@
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { GalleryCardProps } from "../types";
 
-function GalleryCard({ plantWithNote, deletePlantAndNote, updateNote}: GalleryCardProps) {
+function GalleryCard({ plantWithNote, deletePlantAndNote}: GalleryCardProps) {
   const { cloudinaryImages, commonNames, scientificName, notes, _id } = plantWithNote; 
   const { note, idDate, idPlace } = notes[0] 
   const plantId = _id;
