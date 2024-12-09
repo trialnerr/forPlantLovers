@@ -4,12 +4,13 @@ import passport from "passport";
 import session from "express-session";
 import MongoStore from "connect-mongo";
 import cookieParser from "cookie-parser";
-import { connectDB } from "./config/database";
+import userRouter from "./routes/userRouter";
+import connectDB from "./config/database";
 //error handler middleware
 import globalErrorHandler from "./middleware/globalErrorHandler";
 import notFoundHandler from "./middleware/notFound";
 //Routers
-import userRouter from "./routes/userRouter";
+
 import { env } from "process";
 import passportConfig from "./config/passport";
 import cors from "cors";
