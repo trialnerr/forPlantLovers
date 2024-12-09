@@ -10,7 +10,7 @@ import { Types } from "mongoose";
 import { env } from "process";
 import { MongoDBCacheStore } from "../middleware/MongoDBCacheStore";
 const store = new MongoDBCacheStore(env.DB_STRING, "test", "cache");
-console.log(env.PERENUAL_API_KEY);
+
 const createPlant = async (
   req: Request<object, object, CreatePlantBody>,
   res: Response,
