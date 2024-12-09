@@ -119,13 +119,14 @@ function Register() {
       </div> */}
       <button
         type="submit"
-        className="w-full py-4 text-white bg-blue-600 rounded-lg hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 text-lg mb-4"
+        className="w-full py-4 text-white bg-gradient-to-r from-darkGreen via-lightGreen  to-green rounded-lg focus:ring-4 focus:outline-none focus:ring-blue-300 text-lg mb-4"
       >
         Register
       </button>
+     
       <p className="text-sm text-center text-gray-600">
         Already have an account?{" "}
-        <a href="/login" className="text-blue-600 hover:underline">
+        <a href="/login" className="text-green hover:underline">
           Sign in
         </a>
       </p>
