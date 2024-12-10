@@ -22,12 +22,13 @@ function Identify() {
     null,
   );
   const [identifiedPlant, setIdentifiedPlant] = useState<Species | null>(null);
-  const [cloudinaryImages, setCloudinaryImages] = useState<ApiImageResponse | null>(null);
+  const [cloudinaryImages, setCloudinaryImages] =
+    useState<ApiImageResponse | null>(null);
   const [done, setDone] = useState<boolean>(false);
   const [errorMsg, setErrorMsg] = useState<string | undefined>();
 
   function closeMsg() {
-    setErrorMsg(undefined); 
+    setErrorMsg(undefined);
   }
 
   if (done) {
@@ -79,8 +80,8 @@ function Identify() {
     ) {
       setCurrImage(file);
     } else {
-      console.log("Image already exists", file); 
-      setErrorMsg('The same image cannot be added twice')
+      console.log("Image already exists", file);
+      setErrorMsg("The same image cannot be added twice");
       setCurrImage(null);
     }
     setModalOpen(true);
@@ -106,10 +107,10 @@ function Identify() {
       });
       const result: ApiImagesAndResultsResponse = await response.json();
       setIdentification(result.data.results);
-      setCloudinaryImages(result.images); 
+      setCloudinaryImages(result.images);
     } catch (error) {
-      setErrorMsg('Error identifying image');
-      console.error("Error identifying image"); 
+      setErrorMsg("Error identifying image");
+      console.error("Error identifying image");
     }
   }
 
@@ -123,10 +124,8 @@ function Identify() {
     setDone(true);
   }
 
-  
-
   return (
-    <main className="relative isolate px-6 pt-6 lg:px-8 min-h-[calc(100vh-2rem)] content-center my-16 bg-grey">
+    <main className="relative isolate px-6 pt-6 lg:px-8 content-center mt-16 bg-grey">
       <div className="mx-auto max-w-6xl">
         <div className="text-center flex flex-col h-full">
           <h1 className="text-balance text-3xl font-semibold tracking-tight text-gray-900 sm:text-4xl">
@@ -139,7 +138,11 @@ function Identify() {
             At least one photo of leaf, flower, fruit or bark is required.{" "}
           </h3>
           {openModal && currImage ? (
-            <OrganChoiceModal currImage={currImage} addOrgan={addOrgan} disabledOrganTypes={organs.map(organ => organ.organType)} />
+            <OrganChoiceModal
+              currImage={currImage}
+              addOrgan={addOrgan}
+              disabledOrganTypes={organs.map((organ) => organ.organType)}
+            />
           ) : null}
 
           <form className="my-12 flex flex-col gap-8">
@@ -150,28 +153,25 @@ function Identify() {
               {imageDisplayComponents}
             </div>
             {/* //prevent a submit before there is anything available */}
-            {organs.length !== 0 ? (
-              <button
-                type="button"
-                onClick={handleIdentify}
-                className="py-2.5 px-5 mb-2 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 w-1/2 mx-auto"
-              >
-                IDENTIFY
-              </button>
-            ) : (
-              <button
-                type="button"
-                className="text-white bg-blue-400 dark:bg-blue-500 cursor-not-allowed font-medium rounded-lg text-sm px-5 py-2.5 text-center"
-                disabled
-              >
-                Disabled button
-              </button>
-            )}
+            <button
+              type="button"
+              onClick={organs.length !== 0 ? handleIdentify : undefined}
+              className={
+                organs.length !== 0
+                  ? "py-2.5 px-5 mb-2 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-green focus:z-10 focus:ring-4 focus:ring-gray-100 w-1/2 mx-auto"
+                  : "cursor-not-allowed py-2.5 px-5 mb-2 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-green focus:z-10 focus:ring-4 focus:ring-gray-100 w-1/2 mx-auto"
+              }
+              disabled={organs.length == 0}
+            >
+              IDENTIFY
+            </button>
           </form>
-          
-          {errorMsg && <div className='absolute bottom-5 right-5 w-1/5'>
-            <Toast errMsg={errorMsg} closeMsg={closeMsg} />
-          </div>}
+
+          {errorMsg && (
+            <div className="absolute bottom-5 right-5 w-1/5">
+              <Toast errMsg={errorMsg} closeMsg={closeMsg} />
+            </div>
+          )}
 
           {!done && (
             <section className="w-full">
