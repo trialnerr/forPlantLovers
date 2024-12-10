@@ -275,3 +275,8 @@ export type PerenualPlantDetailsResponse = {
   };
 };
 
+export type UpdatePlantNoteBody = {
+  note: string;
+  idPlace: string;
+  noteId: string;
+}; 
