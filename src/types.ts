@@ -286,15 +286,20 @@ export type PlantDetails = {
   };
 };
 
+export type PlantDetailsResponse = {
+  plantDetails: PlantDetails;
+};
+
 export type PlantCareResponse = {
   plantCare: PlantCare[];
 };
 
-export type PlantDetailsResponse = {
-  plantDetails: PlantDetails;
-}
-
 export type PlantCareDetailImagesProps = {
   images : string[]
 }
+
+export type PlantCareChatProps = {
+  plantCare: PlantCare[] | null;
+  plantDetails: PlantDetails | null;
+};
 
