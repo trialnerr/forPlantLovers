@@ -1,7 +1,12 @@
+import { MouseEvent } from "react";
 import { ImageDisplayProps } from "../types";
 import imgObj from "../utils/imageObj";
 
-function ImageDisplay({imgUrl, organType}: ImageDisplayProps) {
+function ImageDisplay({ imgUrl, organType, handleOrganDelete, index }: ImageDisplayProps) {
+  function handleDelete(e: MouseEvent<HTMLButtonElement>) {
+    e.preventDefault();
+    handleOrganDelete(index);
+  }
   return (
     <div className="flex items-center justify-center w-full relative">
       <div className="flex flex-col items-center justify-center w-full h-64 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 hover:bg-gray-100">
@@ -13,10 +18,13 @@ function ImageDisplay({imgUrl, organType}: ImageDisplayProps) {
           />
         ) : null}
       </div>
+     
 
       {organType && (
         <>
-          <button className="absolute right-0 top-0">
+          <button
+            onClick={handleDelete}
+            className="absolute right-0 top-0">
             <span className="inline-flex justify-center items-center size-8 rounded-full border-4 border-red-100 bg-red-200 text-red-800">
               <svg
                 className="shrink-0 size-4"
