@@ -1,5 +1,5 @@
 import { useLocation } from "react-router-dom";
-import { PlantCare, PlantCareResponse, PlantWithNote } from "../types";
+import { PlantCare, PlantCareResponse, PlantDetails, PlantDetailsResponse, PlantWithNote } from "../types";
 import PlantCareChat from "../components/PlantCareChat";
 import PlantImages from "../components/PlantCareDetailImages";
 import { useEffect, useState } from "react";
@@ -10,18 +10,24 @@ function PlantCarePage() {
   const { cloudinaryImages, commonNames, notes, genus } = plantWithNote;
   const date = new Date(notes[0].idDate).toLocaleDateString();
   const [plantCare, setPlantCare] = useState<PlantCare[] | null>(null);
+  const [plantDetails, setPlantDetails] = useState<PlantDetails | null>(null);
+  console.log(plantCare, plantDetails, 'in plantCarePage');
 
-  console.log(plantCare, "plantCareData");
 
-  async function fetchPlantCareData() {
-    console.log('I ran')
+  async function fetchPlantCareAndDetailsData() {
     const response = await fetch(`/api/plant/care/${genus}`);
+    const detailResponse = await fetch(`/api/plant/details/${genus}`);
     const responseData: PlantCareResponse = await response.json();
+    const detailData: PlantDetailsResponse = await detailResponse.json();
+    console.log(responseData, 'resData');
+    console.log(detailData, 'detailData');
     setPlantCare(responseData.plantCare);
+    setPlantDetails(detailData.plantDetails);
   }
 
+
   useEffect(() => {
-    fetchPlantCareData();
+    fetchPlantCareAndDetailsData();
   }, []);
 
   return (
@@ -37,7 +43,7 @@ function PlantCarePage() {
         <div className="flex justify-center my-4">
           <PlantImages images={cloudinaryImages} />
         </div>
-        {plantCare && <PlantCareChat plantCare={plantCare} />}
+        {<PlantCareChat plantCare={plantCare} plantDetails={plantDetails}/>}
       </section>
     </main>
   );
