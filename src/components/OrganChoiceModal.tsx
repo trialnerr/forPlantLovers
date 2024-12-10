@@ -4,9 +4,11 @@ import { ModalProps, OrganType } from "../types";
 function OrganChoiceModal({
   currImage,
   addOrgan,
+  disabledOrganTypes
 }: ModalProps): React.JSX.Element {
   const organTypes: OrganType[] = ["fruit", "flower", "bark", "leaf"];
   const imgUrl = URL.createObjectURL(currImage);
+  
   return (
     <section
       className="relative z-10"
@@ -34,6 +36,7 @@ function OrganChoiceModal({
                     key={index}
                     addOrgan={addOrgan}
                     organType={val}
+                    disabledOrganTypes={disabledOrganTypes}
                   />
                 ))}
               </ul>
