@@ -139,7 +139,7 @@ function Identify() {
             At least one photo of leaf, flower, fruit or bark is required.{" "}
           </h3>
           {openModal && currImage ? (
-            <OrganChoiceModal currImage={currImage} addOrgan={addOrgan} />
+            <OrganChoiceModal currImage={currImage} addOrgan={addOrgan} disabledOrganTypes={organs.map(organ => organ.organType)} />
           ) : null}
 
           <form className="my-12 flex flex-col gap-8">
@@ -149,6 +149,7 @@ function Identify() {
             <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-4">
               {imageDisplayComponents}
             </div>
+            {/* //prevent a submit before there is anything available */}
             {organs.length !== 0 ? (
               <button
                 type="button"
