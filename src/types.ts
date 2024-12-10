@@ -30,6 +30,8 @@ export type OrganListItemProps = {
 export type ImageDisplayProps = {
   imgUrl: string | undefined;
   organType: OrganType | undefined;
+  handleOrganDelete: (index: number) => void;
+  index: number;
 };
 
 export type SelectedSpecies = {};
