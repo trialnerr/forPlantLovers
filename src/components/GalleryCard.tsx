@@ -23,7 +23,7 @@ function GalleryCard({ plantWithNote, deletePlantAndNote}: GalleryCardProps) {
   }
 
   return (
-    <article className="max-w-sm bg-white border border-gray-200 rounded-lg shadow-md overflow-hidden">
+    <article className="max-w-sm bg-white border border-gray-300 rounded-lg shadow-md overflow-hidden">
       <section className="grid grid-cols-2 gap-2 p-3">
         {cloudinaryImages.map((img, i) => (
           <img
@@ -35,49 +35,47 @@ function GalleryCard({ plantWithNote, deletePlantAndNote}: GalleryCardProps) {
         ))}
       </section>
       <div className="p-5">
-        <h5 className="mb-2 text-xl font-bold tracking-tight text-gray-900">
+        <h5 className="mb-2 text-lg font-semibold text-gray-800">
           Common Names:{" "}
-          <span className="text-lg tracking-tight text-gray-700">
-            {commonNames.join(", ")}.
-          </span>
+          <span className="text-gray-500 font-normal">{commonNames.join(", ")}</span>
         </h5>
-        <h6 className="mb-2 text-lg font-semibold tracking-tight text-gray-800">
+        <h6 className="mb-2 text-md font-medium text-gray-800">
           Scientific Name:{" "}
-          <span className="text-lg tracking-tight text-gray-700">
-            {scientificName}.
-          </span>
+          <span className="text-gray-500 font-normal">{scientificName}</span>
         </h6>
-        <p className="mb-3 font-normal text-gray-700">
-          Note:{" "}
-          <span className="text-lg tracking-tight text-gray-700">{note}</span>
-        </p>
-        <p className="mb-3 font-normal text-gray-700">
-          Found at:{" "}
-          <span className="text-lg tracking-tight text-gray-700">
-            {idPlace}
-          </span>
-        </p>
-        <p className="mb-3 font-normal text-gray-700">
-          When:{" "}
-          <span className="text-lg tracking-tight text-gray-700">
-            {new Date(idDate).toLocaleDateString()}
-          </span>
-        </p>
+        <div className="bg-gray-50 p-4 rounded-lg shadow-inner mb-5">
+          <p className="mb-2 text-gray-700">
+            <strong>Note:</strong>{" "}
+            <span className="text-gray-600">{note}</span>
+          </p>
+          <p className="mb-2 text-gray-700">
+            <strong>Found at:</strong>{" "}
+            <span className="text-gray-600">{idPlace}</span>
+          </p>
+          <p className="mb-2 text-gray-700">
+            <strong>When:</strong>{" "}
+            <span className="text-gray-600">
+              {new Date(idDate).toLocaleDateString()}
+            </span>
+          </p>
+        </div>
+
         <div className="flex justify-end space-x-2">
           <button
             onClick={handleUpdate}
-            className="px-3 py-1 bg-blue-500 text-white rounded hover:bg-blue-600"
+            className="px-3 py-1 bg-gray-800 text-white text-sm rounded hover:bg-gray-900"
           >
             Update
           </button>
           <button
             onClick={handleDelete}
-            className="px-3 py-1 bg-red-500 text-white rounded hover:bg-red-600"
+            className="px-3 py-1 bg-red-500 text-white rounded hover:bg-red-600 text-sm"
           >
             Delete
           </button>
           <button
             onClick={navigateToPlantDetails}
+            className="px-3 py-1 bg-gray-200 text-gray-800 rounded hover:bg-gray-300 text-sm"
           >
             See details
           </button>
@@ -87,42 +85,4 @@ function GalleryCard({ plantWithNote, deletePlantAndNote}: GalleryCardProps) {
   );
 }
 
-export default GalleryCard
-
-  //  <div className="flex flex-col w-full max-w-[320px] leading-1.5 p-4 border-gray-200 bg-gray-100 rounded-e-xl rounded-es-xl">
-  //     <div className="flex items-center space-x-2 rtl:space-x-reverse">
-  //       <span className="text-sm font-semibold text-gray-900">
-  //       {commonNames.join(', ')}
-  //       </span>
-  //       <span className="text-sm font-normal text-gray-500">
-  //       {genus} - {scientificName}
-  //       </span>
-  //     </div>
-  //     {isEditing ? (
-  //       <textarea
-  //       className="text-sm font-normal py-2.5 text-gray-900 w-full"
-  //       value={tempNote}
-  //       onChange={(e) => setTempNote(e.target.value)}
-  //       />
-  //     ) : (
-  //       <p className="text-sm font-normal py-2.5 text-gray-900">
-  //       {note}
-  //       </p>
-  //     )}
-  //     <div className="flex space-x-2 rtl:space-x-reverse">
-  //       {isEditing ? (
-  //       <>
-  //         <button onClick={handleSave} className="text-sm font-medium text-blue-600">
-  //         Save
-  //         </button>
-  //         <button onClick={handleCancel} className="text-sm font-medium text-gray-600">
-  //         Cancel
-  //         </button>
-  //       </>
-  //       ) : (
-  //       <button onClick={handleEdit} className="text-sm font-medium text-blue-600">
-  //         Edit
-  //       </button>
-  //       )}
-  //     </div>
-  //     </div>
+export default GalleryCard; 
