@@ -44,26 +44,8 @@ function Upload({ handleImageUpload }: UploadProps): React.JSX.Element {
           }}
         />
       </label>
-      <label
-        htmlFor="organSelect"
-        className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-      >
-        Select an option
-      </label>
     </div>
   );
 }
 
 export default Upload;
-
-//Form
-//drop zone  & select
-//add organ
-//? Identify
-
-// STEPS
-// 1. Create an array of organs (data object) to be submitted during post
-// 2. Write a post to the server using useEffect()
-// 3. Posting data to our external api properly
-// 4. Confirm that we get a response of 200 from the external API
-// 5. Disable the identify button until they have at least one picture
