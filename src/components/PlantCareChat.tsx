@@ -1,9 +1,9 @@
 import wateringImage from "../client/assets/wateringImage.jpg";
 import sunImage from "../client/assets/sunImage.jpg";
 import pruningImage from "../client/assets/pruningImage.jpg";
-import { PlantCareResponse } from "../types";
+import { PlantCareChatProps } from "../types";
 
-function PlantCareChat({ plantCare }: PlantCareResponse) {
+function PlantCareChat({ plantCare , plantDetails}: PlantCareChatProps) {
   const imgObj = {
     watering: wateringImage, 
     sunlight: sunImage, 
@@ -14,7 +14,23 @@ function PlantCareChat({ plantCare }: PlantCareResponse) {
       <h1 className="text-2xl font-bold text-green-700 mb-4 text-center">
         Care Tips
       </h1>
-      {!plantCare && <h2>Unfortunately we do not currently have plant care details for this plant. </h2>}
+      {/* {!plantCare && (
+        <h2>
+          Unfortunately we do not currently have plant care details for this
+          plant.{" "}
+        </h2>
+      )} */}
+      {plantDetails && (
+        <div className="bg-white border border-gray-200 rounded-2xl p-4 space-y-3 mb-10">
+          <h2 className="font-medium text-gray-800 ">{`Care level ${plantDetails.care_level}`}</h2>
+          <div className="space-y-1.5">
+            <p className="mb-1.5 text-sm text-gray-800 ">
+              {`Description: ${plantDetails.description}`}
+            </p>
+          </div>
+        </div>
+      )}
+      {plantCare && (
       <ul className="space-y-5">
         {plantCare[0] && (
           <li className="flex gap-x-2 sm:gap-x-4 me-11">
@@ -81,7 +97,7 @@ function PlantCareChat({ plantCare }: PlantCareResponse) {
             </div>
           </li>
         )}
-      </ul>
+      </ul>)}
     </section>
   );
 }
