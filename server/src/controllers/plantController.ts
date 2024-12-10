@@ -1,9 +1,6 @@
 import { NextFunction, Request, Response } from "express";
 import { createServerError } from "../utils/createServerError";
-import {
-  CreatePlantBody,
-  HttpCode,
-} from "../types/types";
+import { CreatePlantBody, HttpCode } from "../types/types";
 import { Plant } from "../models/Plant";
 import { Types } from "mongoose";
 import getPlantCareDetails from "../utils/getPlantCareDetails";
@@ -106,23 +103,38 @@ const getPlantCare = async (
 ) => {
   try {
     const { genus } = req.params;
-    const apiSpeciesId = await getPlantSpeciesId(genus); 
-  
+    const apiSpeciesId = await getPlantSpeciesId(genus);
+
     if (apiSpeciesId) {
-      const plantDetails = await getPlantDetails(apiSpeciesId);
-      console.log(plantDetails, "plantDetails");
-      const plantCareRes = await getPlantCareDetails(apiSpeciesId); 
-      const plantCare = plantCareRes[0].section; 
+      const plantCareRes = await getPlantCareDetails(apiSpeciesId);
+      const plantCare = plantCareRes[0].section;
       console.log(plantCare, "plantCare");
-      res.status(200).json({ plantCare, plantDetails }); 
+      res.status(200).json({ plantCare });
     } else {
       res.status(404).json({ message: "Species ID not found" });
     }
   } catch (error) {
-    return next(
-    
-      error,
-    );
+    return next(error);
+  }
+};
+
+const getMorePlantDetails = async (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) => {
+  try {
+    const { genus } = req.params;
+    const apiSpeciesId = await getPlantSpeciesId(genus);
+
+    if (apiSpeciesId) {
+      const plantDetails = await getPlantDetails(apiSpeciesId);
+      res.status(200).json({ plantDetails });
+    } else {
+      res.status(404).json({ message: "Species ID not found" });
+    }
+  } catch (error) {
+    return next(error);
   }
 };
 const plantController = {
@@ -131,6 +143,7 @@ const plantController = {
   getAllPlantsAndNotes,
   deletePlant,
   getPlantCare,
+  getMorePlantDetails
 };
 
 export default plantController;
