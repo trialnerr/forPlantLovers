@@ -20,11 +20,13 @@ export type UploadProps = {
 export type ModalProps = {
   currImage: File;
   addOrgan: (organType: OrganType) => void;
+  disabledOrganTypes: OrganType[]; 
 };
 
 export type OrganListItemProps = {
   addOrgan: (organType: OrganType) => void;
   organType: OrganType;
+  disabledOrganTypes: OrganType[];
 };
 
 export type ImageDisplayProps = {
