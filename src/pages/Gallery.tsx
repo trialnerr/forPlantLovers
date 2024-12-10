@@ -23,13 +23,13 @@ function Gallery() {
     }
   }
 
-  async function updateNote(noteId: string) {
-    await fetch(`/api/plantNote/${noteId}`, {
+  async function updateNote(noteId: string, note: string, idPlace: string) {
+    await fetch(`/api/plantNote/update`, {
       method: "PATCH",
       headers: {
         "Content-Type": "application/json",
       },
-      // body: JSON.stringify()
+      body: JSON.stringify({ noteId, note, idPlace }),
     });
     if (userId) {
       fetchPlantData(userId);
