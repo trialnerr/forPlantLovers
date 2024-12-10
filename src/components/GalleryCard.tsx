@@ -76,9 +76,6 @@ function GalleryCard({ plantWithNote, deletePlantAndNote}: GalleryCardProps) {
           >
             Delete
           </button>
-          {/* <Link to={`/care/${plantId}`}>
-            See plant details
-          </Link> */}
           <button
             onClick={navigateToPlantDetails}
           >
