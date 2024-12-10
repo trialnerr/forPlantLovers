@@ -1,7 +1,6 @@
 import { PlantCareDetailImagesProps } from '../types';
 
 function PlantAndNote({ images }: PlantCareDetailImagesProps) {
- 
 
   return (
     <div className="flex flex-col items-center gap-2.5">
