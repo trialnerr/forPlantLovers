@@ -175,16 +175,16 @@ export type PlantNoteResponse = {
   __v: number;
 };
 
-export type PlantNoteUpdateBody = {
-  idDate?: Date;
-  idPlace?: string;
-  note?: string;
-};
+// export type PlantNoteUpdateBody = {
+//   idDate?: Date;
+//   idPlace?: string;
+//   note?: string;
+// };
 
 export type GalleryCardProps = {
   plantWithNote: PlantWithNote;
   deletePlantAndNote: (plantId: string, noteId: string) => void;
-  updateNote: (noteId: string, updateBody: PlantNoteUpdateBody) => void;
+  updateNote: (noteId: string, note: string, idPlace: string) => void;
 };
 
 export type CareType = "watering" | "sunlight" | "pruning";
@@ -302,4 +302,11 @@ export type PlantCareChatProps = {
   plantCare: PlantCare[] | null;
   plantDetails: PlantDetails | null;
 };
+
+export type NoteProps = {
+  note: string; 
+  idPlace: string;
+  idDate: string;
+  isEditing: boolean;
+}
 
