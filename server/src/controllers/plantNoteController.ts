@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from "express";
 import { createServerError } from "../utils/createServerError";
-import { CreatePlantNoteBody, HttpCode } from "../types/types";
+import { CreatePlantNoteBody, HttpCode, UpdatePlantNoteBody } from "../types/types";
 import { PlantNote } from "../models/PlantNote";
 import { Types } from "mongoose";
 
@@ -45,9 +45,27 @@ const deletePlantNote = async (
   }
 };
 
+const updatePlantNote = async (
+  req: Request<object,object,UpdatePlantNoteBody>,
+  res: Response,
+  next: NextFunction,
+) => {
+  try {
+    const { note, idPlace, noteId } = req.body;
+    const response = await PlantNote.updateOne(
+      { _id: new Types.ObjectId(noteId) },
+      { $set: { note, idPlace } },
+    );
+    res.status(200).json(response);
+  } catch (error) {
+    next(error);
+  }
+};
+
 const plantNoteController = {
   createPlantNote,
   deletePlantNote,
+  updatePlantNote
 };
 
 export default plantNoteController;
