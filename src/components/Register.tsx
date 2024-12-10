@@ -99,24 +99,6 @@ function Register() {
           required
         />
       </div>
-      {/* commented out the terms and conditions checkbox */}
-      {/* <div className="flex items-start mb-6">
-        <input
-          id="terms"
-          type="checkbox"
-          className="w-4 h-4 mt-1 rounded border focus:ring-blue-500"
-          required
-        />
-        <label
-          htmlFor="terms"
-          className="ml-2 text-sm font-medium text-gray-900"
-        >
-          I agree to the{" "}
-          <a href="#" className="text-blue-600 hover:underline">
-            terms and conditions
-          </a>
-        </label>
-      </div> */}
       <button
         type="submit"
         className="w-full py-4 text-white bg-gradient-to-r from-darkGreen via-lightGreen  to-green rounded-lg focus:ring-4 focus:outline-none focus:ring-blue-300 text-lg mb-4"
