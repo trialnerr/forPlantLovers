@@ -60,7 +60,6 @@ function SignIn() {
           placeholder="example@example.com"
           required
           ref={emailRef}
-          minLength={8}
         />
       </div>
       <div className="mb-4">
