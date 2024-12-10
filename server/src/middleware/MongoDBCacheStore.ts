@@ -1,6 +1,13 @@
 import axios from "axios";
 import { MongoClient, Document, Collection } from "mongodb";
-import { PerenualPlantCareData, PerenualPlantCareResponse, PerenualPlantListData, PerenualPlantListResponse, SetOptionsType } from "../types/types";
+import {
+  PerenualPlantCareData,
+  PerenualPlantCareResponse,
+  PerenualPlantDetailsResponse,
+  PerenualPlantListData,
+  PerenualPlantListResponse,
+  SetOptionsType,
+} from "../types/types";
 
 export class MongoDBCacheStore {
   uri: string;
@@ -27,28 +34,38 @@ export class MongoDBCacheStore {
     }
   }
 
-  async find(key: string): Promise<PerenualPlantListData[] | PerenualPlantCareData[] | null> {
+  async find(
+    key: string,
+  ) {
     console.log("MongoStore.find", key);
     await this.connect();
     const result = await this.collection?.findOne({ key });
-    console.log({ result }, 'in MongoStore'); 
     if (result) {
-      return result.value as
-        | PerenualPlantListData[]
-        | PerenualPlantCareData[];
+      return result.value as PerenualPlantListData[] | PerenualPlantCareData[] | PerenualPlantDetailsResponse;
     } else {
-      const response = await axios.get<PerenualPlantCareResponse | PerenualPlantListResponse>(key);
-      console.log("response", response);
-      //check if the response is valid enough to save
-      await this.set(key, response.data.data, {
-        maxAge: 15 * 24 * 30 * 60 * 1000 * 60,
-      });
-      return response.data.data;
+      const response = await axios.get<
+        | PerenualPlantCareResponse
+        | PerenualPlantListResponse
+        | PerenualPlantDetailsResponse
+      >(key);
+      if ("data" in response.data) {
+        if (response.data.data.length > 0) {
+          await this.set(key, response.data.data, {
+            maxAge: 15 * 24 * 30 * 60 * 1000 * 60,
+          });
+          return response.data.data;
+        }
+      } else if (response.data) {
+        await this.set(key, response.data, {
+          maxAge: 15 * 24 * 30 * 60 * 1000 * 60,
+        });
+        return response.data;
+      }
     }
+    return null;
   }
 
-  
-  async set(key:string, value, options: SetOptionsType) {
+  async set(key: string, value, options: SetOptionsType) {
     console.log("MongoStore.set", key);
     await this.connect();
     const result = await this.collection?.updateOne(
