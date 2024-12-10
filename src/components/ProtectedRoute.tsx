@@ -3,7 +3,6 @@ import { AuthContext } from "../context/authContext"
 import { Navigate, useLocation } from "react-router-dom";
 import Loading from "./Loading";
 
-//this broke everything. It seems that on refresh. 
 function ProtectedRoute({ children }: PropsWithChildren) {
   const location = useLocation();
   const context = useContext(AuthContext); 
