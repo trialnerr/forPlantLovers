@@ -40,16 +40,23 @@ function Identify() {
     setDone(false);
   }
 
+  function handleOrganDelete(index: number) {
+    const newOrgans = organs.filter((_organ, i) => i !== index);
+    setOrgans(newOrgans);
+  }
+
   const imageDisplayComponents: JSX.Element[] = [];
-  for (let i = 0; i < 4; i++) {
-    const imgUrl: string | undefined = organs[i]
-      ? URL.createObjectURL(organs[i].image)
+  for (let index = 0; index < 4; index++) {
+    const imgUrl: string | undefined = organs[index]
+      ? URL.createObjectURL(organs[index].image)
       : undefined;
     imageDisplayComponents.push(
       <ImageDisplay
-        organType={organs[i]?.organType}
+        organType={organs[index]?.organType}
         imgUrl={imgUrl}
-        key={`imageDisplay${i}`}
+        key={`imageDisplay${index}`}
+        index={index}
+        handleOrganDelete={handleOrganDelete}
       />,
     );
   }
@@ -115,6 +122,8 @@ function Identify() {
   function handleSetDone() {
     setDone(true);
   }
+
+  
 
   return (
     <main className="relative isolate px-6 pt-6 lg:px-8 min-h-[calc(100vh-2rem)] content-center my-16 bg-grey">
