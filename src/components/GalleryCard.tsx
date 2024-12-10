@@ -106,7 +106,7 @@ function GalleryCard({ plantWithNote, deletePlantAndNote, updateNote }: GalleryC
           ) : (
             <button
               onClick={() => setIsEditing(true)}
-              className="px-3 py-1 bg-gray-800 text-white text-sm rounded hover:bg-gray-900"
+              className="px-3 py-1 bg-green text-white text-sm rounded hover:bg-lightGreen"
             >
               Update
             </button>
