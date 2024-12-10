@@ -11,7 +11,7 @@ import { AuthProvider } from "./context/authProvider.tsx";
 import ProtectedRoute from "./components/ProtectedRoute.tsx";
 import Gallery from "./pages/Gallery.tsx";
 import PlantCarePage from "./pages/PlantCarePage.tsx";
-// import loadGalleryPlants from "./loaders/galleryPlantsLoader.tsx";
+import NotFound from "./pages/NotFound.tsx";
 
 const router = createBrowserRouter(
   [
@@ -30,7 +30,7 @@ const router = createBrowserRouter(
             <ProtectedRoute>
               <Identify />
             </ProtectedRoute>
-          )
+          ),
         },
         {
           path: "/gallery",
@@ -44,7 +44,7 @@ const router = createBrowserRouter(
           path: "/care/:plantId",
           element: (
             <ProtectedRoute>
-              <PlantCarePage/>
+              <PlantCarePage />
             </ProtectedRoute>
           ),
         },
@@ -55,6 +55,10 @@ const router = createBrowserRouter(
         {
           path: "/login",
           element: <SignInPage />,
+        },
+        {
+          path: "*",
+          element: <NotFound />,
         },
       ],
     },
