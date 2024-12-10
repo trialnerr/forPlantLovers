@@ -31,7 +31,7 @@ function PlantCarePage() {
   }, []);
 
   return (
-    <main className="relative isolate px-6 pt-6 lg:px-8 content-center min-h-[calc(100vh-2rem)]">
+    <main className="relative isolate px-6 pt-6 lg:px-8 content-center min-h-[calc(100vh-2rem)] my-16">
       <section className="mx-auto max-w-6xl">
         <h1 className="text-balance text-3xl font-semibold tracking-tight text-gray-900 sm:text-4xl py-1 text-center mb-2">
           {commonNames[0]}
