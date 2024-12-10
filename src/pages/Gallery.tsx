@@ -43,7 +43,7 @@ function Gallery() {
   }, [userId]);
 
   return (
-    <main className="relative isolate px-6 pt-6 lg:px-8 content-center min-h-[calc(100vh-2rem)] bg-gray-100 p-9 my-16">
+    <main className="relative isolate px-6 pt-6 lg:px-8 content-center min-h-[calc(100vh-2rem)] bg-gray-100 p-9 mt-16">
       <div className="mx-auto max-w-6xl">
         <h1 className="text-balance text-3xl font-semibold tracking-tight text-gray-900 sm:text-4xl py-1 text-center mb-2">
           Plant Gallery
