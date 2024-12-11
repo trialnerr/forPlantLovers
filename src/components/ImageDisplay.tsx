@@ -24,8 +24,8 @@ function ImageDisplay({ imgUrl, organType, handleOrganDelete, index }: ImageDisp
         <>
           <button
             onClick={handleDelete}
-            className="absolute right-0 top-0">
-            <span className="inline-flex justify-center items-center size-8 rounded-full border-4 border-red-100 bg-red-200 text-red-800">
+            className="absolute right-0 top-0 translate-x-1/4 -translate-y-1/4">
+            <span className="inline-flex justify-center items-center size-8 rounded-full border-4 border-red-200 bg-red-200 text-red-800">
               <svg
                 className="shrink-0 size-4"
                 xmlns="http://www.w3.org/2000/svg"
@@ -44,13 +44,13 @@ function ImageDisplay({ imgUrl, organType, handleOrganDelete, index }: ImageDisp
             </span>
             <span className="sr-only">Delete choice</span>
           </button>
-          <button className="absolute left-0 bottom-0 rounded-full size-12 bg-green shrink-0">
+          <div className="absolute left-0 bottom-0 rounded-full size-10 bg-lightGreen shrink-0 -translate-x-1/4 translate-y-1/4">
             <img
               className="p-2"
               src={imgObj[organType]}
               alt={`${organType} icon`}
             />{" "}
-          </button>
+          </div>
         </>
       )}
     </div>
