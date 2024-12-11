@@ -3,12 +3,26 @@ import { ResultCardProps } from "../types";
 function ResultCard({ result, id, handleAddSpecies  }: ResultCardProps) {
   const { score, species, images } = result; 
   return (
-    <article className="w-full bg-white border border-gray-200 rounded-lg shadow my-4">
-      <div className="w-full p-4 border border-gray-200 bg-gray-50 rounded-t-lg">
-        <div>Common Names: {`${species.commonNames.join(", ")}.`} </div>
-        <div>Confidence: {`${Math.floor(score * 10000) / 100}%`} </div>
-        <div>Scientific Name: {species.scientificName}</div>
-        <div>Genus: {species.family.scientificNameWithoutAuthor}</div>
+    <article className="w-full bg-white rounded-lg shadow my-4">
+      <div className="w-full p-4 border bg-gray-50 rounded-t-lg flex justify-between">
+        <div className="flex flex-col justify-start text-start">
+          <div>
+            <span className="font-bold">Common Names:</span>{" "}
+            {`${species.commonNames.join(", ")}.`}{" "}
+          </div>
+          <div>
+            <span className="font-bold">Scientific Name:</span>{" "}
+            <span className="font-light italic">{species.scientificName}</span>
+          </div>
+          <div>
+            <span className="font-bold">Genus:</span>{" "}
+            {species.family.scientificNameWithoutAuthor}
+          </div>
+        </div>
+        <div className="self-end">
+          <span className="font-bold">Confidence:</span>{" "}
+          {`${Math.floor(score * 10000) / 100}%`}{" "}
+        </div>
       </div>
       <div className="w-full p-4 border flex justify-center">
         <div className="flex gap-3 flex-wrap">
@@ -22,7 +36,7 @@ function ResultCard({ result, id, handleAddSpecies  }: ResultCardProps) {
           <button
             onClick={() => handleAddSpecies(id)}
             type="button"
-            className="text-gray-900 bg-white hover:bg-gray-100 border border-gray-200 focus:ring-4 focus:outline-none focus:ring-gray-100 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:focus:ring-gray-600 dark:bg-gray-800 dark:border-gray-700 dark:text-white dark:hover:bg-gray-700 me-2 mb-2"
+            className="text-gray-900 bg-lightLightGreen hover:bg-lightGreen border border-gray-200 focus:ring-4 focus:outline-none focus:ring-gray-100 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center me-2 mb-2"
           >
             This is the correct plant!
           </button>
