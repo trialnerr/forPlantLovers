@@ -80,7 +80,6 @@ function Identify() {
     ) {
       setCurrImage(file);
     } else {
-      console.log("Image already exists", file);
       setErrorMsg("The same image cannot be added twice");
       setCurrImage(null);
     }

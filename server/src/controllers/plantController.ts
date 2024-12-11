@@ -35,7 +35,6 @@ const getAllUserPlants = async (
 ) => {
   try {
     const userId = req.params.id;
-    console.log(userId);
     const userPlants = await Plant.find({ postedBy: userId });
     res.status(200).json({ userPlants });
   } catch (error) {
@@ -56,7 +55,6 @@ const getAllPlantsAndNotes = async (
 ) => {
   try {
     const userId = req.params.userId;
-    console.log({ userId });
     const userPlantsWithNotes = await Plant.aggregate([
       { $match: { postedBy: new Types.ObjectId(userId) } },
       {
@@ -108,7 +106,6 @@ const getPlantCare = async (
     if (apiSpeciesId) {
       const plantCareRes = await getPlantCareDetails(apiSpeciesId);
       const plantCare = plantCareRes[0].section;
-      console.log(plantCare, "plantCare");
       res.status(200).json({ plantCare });
     } else {
       res.status(404).json({ message: "Species ID not found" });

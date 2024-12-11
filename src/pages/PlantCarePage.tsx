@@ -13,9 +13,6 @@ function PlantCarePage() {
   const [plantCare, setPlantCare] = useState<PlantCare[] | null>(null);
   const [plantDetails, setPlantDetails] = useState<PlantDetails | null>(null);
   
-  const context = useContext(AuthContext); 
-  console.log(context?.user);
-  
   async function fetchPlantCareAndDetailsData() {
     const response = await fetch(`/api/plant/care/${genus}`);
     const detailResponse = await fetch(`/api/plant/details/${genus}`);

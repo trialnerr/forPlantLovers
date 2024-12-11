@@ -25,7 +25,6 @@ export class MongoDBCacheStore {
 
   async connect() {
     if (!this.client) {
-      console.log("MongoStore.connect");
       this.client = new MongoClient(this.uri);
       await this.client.connect();
       this.collection = this.client
@@ -37,7 +36,6 @@ export class MongoDBCacheStore {
   async find(
     key: string,
   ) {
-    console.log("MongoStore.find", key);
     await this.connect();
     const result = await this.collection?.findOne({ key });
     if (result) {
@@ -66,14 +64,12 @@ export class MongoDBCacheStore {
   }
 
   async set(key: string, value, options: SetOptionsType) {
-    console.log("MongoStore.set", key);
     await this.connect();
-    const result = await this.collection?.updateOne(
+    await this.collection?.updateOne(
       { key },
       { $set: { key, value, expiresAt: options.maxAge + Date.now() } },
       { upsert: true },
-    );
-    console.log("result", result);
+    ); 
   }
 
   async remove(key: string) {
@@ -82,7 +78,6 @@ export class MongoDBCacheStore {
   }
 
   async clear() {
-    console.log("clear");
     await this.connect();
     await this.collection?.deleteMany({});
   }
