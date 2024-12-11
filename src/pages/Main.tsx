@@ -1,18 +1,18 @@
 import Feature from "../components/Feature";
 import { FeatureProps } from "../types"; 
 import plant1 from "../client/assets/plant1.png";
-import plant2 from "../client/assets/plant2.png";
 import plant3 from "../client/assets/plant3.png"; 
+import plant4 from "../client/assets/plant4.jpg";
 
 const Main = () => {
   const feats: FeatureProps[] = [
     { heading: "Identify Plants", text: "Add a picture and get an estimate of what the plant could be.", icon: plant1 },
-    { heading: "Memorize them in a gallery", text: "Add them to your personal gallery with notes", icon: plant2 },
-    { heading: "Get plant care tips", text: "Get plants care tips and never kill a plant again!", icon: plant3 },
+    { heading: "Add to gallery", text: "Add them to your personal gallery with notes", icon: plant4 },
+    { heading: "Get plant care tips", text: "Get care tips and never kill a plant again!", icon: plant3 },
   ];
 
   return (
-    <main className="relative isolate px-6 pt-6 lg:px-8 content-center min-h-[calc(100vh-2rem)]">
+    <main className="relative isolate px-6 pt-6 lg:px-8 content-center min-h-[calc(100vh-2rem)] mt-28 sm:mt-24">
       <div
         className="absolute inset-x-0 -top-40 -z-10 transform-gpu overflow-hidden blur-3xl sm:-top-80"
         aria-hidden="true"
@@ -25,14 +25,13 @@ const Main = () => {
       <div className="mx-auto max-w-3xl">
         <div className="text-center">
           <h1 className="text-balance text-5xl font-semibold tracking-tight text-gray-900 sm:text-7xl">
-            Become a better plant parent.
+            Learn more about the plants around you.
           </h1>
           <p className="mt-8 text-pretty text-lg font-medium text-gray-500 sm:text-xl/8">
-            Learn how to take better care of your plant babies by using some of
-            the features we offer.
+            With forPlantLovers, you can identify plants, memorize them in a gallery and get plant care tips!
           </p>
         </div>
-        <section className="grid grid-cols-3 gap-2">
+        <section className="mt-4 grid md:grid-cols-3 gap-2 justify-center">
           {feats.map((obj, i) => (
             <Feature
               text={obj.text}
