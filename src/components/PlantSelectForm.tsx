@@ -2,22 +2,25 @@ import { FormEvent, useContext, useRef } from "react";
 import { PlantSelectFormProps } from "../types";
 import { AuthContext } from "../context/authContext";
 
-function PlantSelectForm({ identifiedPlant, apiImages, handleSetDone  }: PlantSelectFormProps) {
-  const context = useContext(AuthContext); 
+function PlantSelectForm({
+  identifiedPlant,
+  apiImages,
+  handleSetDone,
+}: PlantSelectFormProps) {
+  const context = useContext(AuthContext);
   const userId: string = context?.user?._id as string;
-  const species = identifiedPlant?.scientificName;
-  identifiedPlant?.genus
+  const commonName = identifiedPlant?.commonNames[0];
 
-  const idDateRef = useRef<HTMLInputElement>(null); 
-  const idPlaceRef = useRef<HTMLInputElement>(null); 
-  const noteRef = useRef<HTMLTextAreaElement>(null); 
+  const idDateRef = useRef<HTMLInputElement>(null);
+  const idPlaceRef = useRef<HTMLInputElement>(null);
+  const noteRef = useRef<HTMLTextAreaElement>(null);
 
-  // const today = ''; 
   async function handleSavePlantAndNote(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    
+
     if (identifiedPlant && apiImages) {
-      const { commonNames, scientificNameWithoutAuthor, genus } = identifiedPlant;
+      const { commonNames, scientificNameWithoutAuthor, genus } =
+        identifiedPlant;
       const genusScientificName: string = genus.scientificName;
 
       const plantData = {
@@ -37,13 +40,13 @@ function PlantSelectForm({ identifiedPlant, apiImages, handleSetDone  }: PlantSe
 
       const result = await response.json();
       const plantID = result.plantId;
-      const idDate = idDateRef.current?.value; 
-      const idPlace = idPlaceRef.current?.value; 
-      const note = noteRef.current?.value; 
+      const idDate = idDateRef.current?.value;
+      const idPlace = idPlaceRef.current?.value;
+      const note = noteRef.current?.value;
 
       const plantNoteData = {
         postedBy: userId,
-        plantID, 
+        plantID,
         idDate,
         idPlace,
         note,
@@ -57,7 +60,7 @@ function PlantSelectForm({ identifiedPlant, apiImages, handleSetDone  }: PlantSe
       });
 
       if (plantNoteSaveResponse.ok) {
-        setTimeout(() => handleSetDone(), 1000); 
+        setTimeout(() => handleSetDone(), 1000);
       }
     }
   }
@@ -74,7 +77,7 @@ function PlantSelectForm({ identifiedPlant, apiImages, handleSetDone  }: PlantSe
                 htmlFor="species"
                 className="block mb-2 text-sm font-medium text-gray-900"
               >
-                Plant Species
+                Plant Common Name
               </label>
               <input
                 type="text"
@@ -82,7 +85,7 @@ function PlantSelectForm({ identifiedPlant, apiImages, handleSetDone  }: PlantSe
                 id="species"
                 className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
                 placeholder="Type product name"
-                defaultValue={species}
+                defaultValue={commonName}
                 readOnly={true}
                 required
               ></input>
@@ -143,7 +146,6 @@ function PlantSelectForm({ identifiedPlant, apiImages, handleSetDone  }: PlantSe
             >
               Add plant
             </button>
-        
           </div>
         </form>
       </div>
