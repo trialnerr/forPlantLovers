@@ -204,12 +204,3 @@ function Identify() {
 
 export default Identify;
 
-//add addOrgan
-//deleteOrgan
-//add a toast that appears and disappears after a bit if an image was added twice
-//handleImageUpload then set modalOpen to true ✅
-
-//when the user clicks the identify button
-//I want to save the pictures in a DB
-//make a request to the api to do the identification
-//display the name of the plant just to start
