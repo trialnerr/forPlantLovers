@@ -2,7 +2,8 @@ import { useLocation } from "react-router-dom";
 import { PlantCare, PlantCareResponse, PlantDetails, PlantDetailsResponse, PlantWithNote } from "../types";
 import PlantCareChat from "../components/PlantCareChat";
 import PlantImages from "../components/PlantCareDetailImages";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
+import { AuthContext } from "../context/authContext";
 
 function PlantCarePage() {
   const { state } = useLocation();
@@ -11,16 +12,15 @@ function PlantCarePage() {
   const date = new Date(notes[0].idDate).toLocaleDateString();
   const [plantCare, setPlantCare] = useState<PlantCare[] | null>(null);
   const [plantDetails, setPlantDetails] = useState<PlantDetails | null>(null);
-  console.log(plantCare, plantDetails, 'in plantCarePage');
-
-
+  
+  const context = useContext(AuthContext); 
+  console.log(context?.user);
+  
   async function fetchPlantCareAndDetailsData() {
     const response = await fetch(`/api/plant/care/${genus}`);
     const detailResponse = await fetch(`/api/plant/details/${genus}`);
     const responseData: PlantCareResponse = await response.json();
     const detailData: PlantDetailsResponse = await detailResponse.json();
-    console.log(responseData, 'resData');
-    console.log(detailData, 'detailData');
     setPlantCare(responseData.plantCare);
     setPlantDetails(detailData.plantDetails);
   }
