@@ -56,7 +56,7 @@ function SignIn() {
         <input
           type="email"
           id="email"
-          className="w-full p-4 text-sm border rounded-lg focus:ring-blue-500 focus:border-blue-500"
+          className="w-full p-2 md:p-4 text-sm border rounded-lg focus:ring-blue-500 focus:border-blue-500"
           placeholder="example@example.com"
           required
           ref={emailRef}
@@ -74,7 +74,7 @@ function SignIn() {
           id="password"
           ref={passwordRef}
           minLength={8}
-          className="w-full p-4 text-sm border rounded-lg focus:ring-blue-500 focus:border-blue-500"
+          className="w-full p-2 md:p-4 text-sm border rounded-lg focus:ring-blue-500 focus:border-blue-500"
           required
         />
         <div className=" mt-2">
@@ -88,7 +88,7 @@ function SignIn() {
       </div>
       <button
         type="submit"
-        className="w-full py-4 text-white bg-gradient-to-r from-darkGreen via-lightGreen  to-green rounded-lg focus:ring-4 focus:outline-none focus:ring-blue-300 text-lg mb-4"
+        className="w-full p-2 md:p-4 text-white bg-gradient-to-r from-darkGreen via-lightGreen  to-green rounded-lg focus:ring-4 focus:outline-none focus:ring-blue-300 text-lg mb-4"
       >
         Sign In
       </button>
