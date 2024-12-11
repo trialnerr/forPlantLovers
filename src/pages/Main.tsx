@@ -2,12 +2,12 @@ import Feature from "../components/Feature";
 import { FeatureProps } from "../types"; 
 import plant1 from "../client/assets/plant1.png";
 import plant3 from "../client/assets/plant3.png"; 
-import plant4 from "../client/assets/plant4.jpg";
+import plant2 from "../client/assets/plant2.png";
 
 const Main = () => {
   const feats: FeatureProps[] = [
     { heading: "Identify Plants", text: "Add a picture and get an estimate of what the plant could be.", icon: plant1 },
-    { heading: "Add to gallery", text: "Add them to your personal gallery with notes", icon: plant4 },
+    { heading: "Add to gallery", text: "Add them to your personal gallery with notes", icon: plant2 },
     { heading: "Get plant care tips", text: "Get care tips and never kill a plant again!", icon: plant3 },
   ];
 
