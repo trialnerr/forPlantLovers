@@ -26,7 +26,7 @@ function Identify() {
     useState<ApiImageResponse | null>(null);
   const [done, setDone] = useState<boolean>(false);
   const [errorMsg, setErrorMsg] = useState<string | undefined>();
-
+ 
   function closeMsg() {
     setErrorMsg(undefined);
   }
@@ -72,6 +72,7 @@ function Identify() {
   }
 
   function handleImageUpload(file: File) {
+    //make sure that this a new organ
     if (
       !organs.find(
         (organ) =>
@@ -122,6 +123,8 @@ function Identify() {
   function handleSetDone() {
     setDone(true);
   }
+  const disabledOrganTypes = organs.map((organ) => organ.organType);
+  console.log(disabledOrganTypes);
 
   return (
     <main className="relative isolate px-6 pt-6 lg:px-8 content-center bg-grey min-h-[calc(100vh-2rem)] mt-24 md:mt-16">
