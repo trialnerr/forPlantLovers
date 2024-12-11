@@ -3,9 +3,9 @@ import { FeatureProps } from "../types";
 
 const Feature = ({ heading, text, icon}: FeatureProps) => {
   return (
-    <div className="p-4 max-w-sm">
+    <section className="p-4 max-w-sm">
       <div className="flex rounded-lg h-full p-4 flex-col bg-gray-100 shadow-lg border ">
-      <div className="flex items-center mb-3 h-20">
+      <div className="flex items-center justify-center mb-3 h-20 border-b">
         <div className="w-10 h-10 mr-3 inline-flex items-center justify-center rounded-full text-green flex-shrink-0">
         <img src={icon} alt="" className="rounded-full w-full h-full" />
         </div>
@@ -17,7 +17,7 @@ const Feature = ({ heading, text, icon}: FeatureProps) => {
         <p className="text-base text-gray-700">{text}</p>
       </div>
       </div>
-    </div>
+    </section>
   );
 };
 
