@@ -5,11 +5,11 @@ import { userData } from "../types";
 export const AuthProvider = ({ children }: PropsWithChildren) => {
   const [user, setUser] = useState<userData | null>(null); 
   const [loading, setLoading] = useState(true);
-
+  
   useEffect(() => {
     const checkLoggedIn = async () => {
       try {
-        const response = await fetch("api/user/check", {
+        const response = await fetch("/api/user/check", {
           credentials: "include",
         });
         if (response.ok) {
@@ -19,7 +19,6 @@ export const AuthProvider = ({ children }: PropsWithChildren) => {
           setUser(null);
         }
       } catch (error) {
-        console.error("Error checking login status:", error);
         setUser(null);
       }
        finally {
@@ -54,7 +53,6 @@ export const AuthProvider = ({ children }: PropsWithChildren) => {
     </AuthContext.Provider>
   );
 };
-
+ //look up absolute vs relative paths
 //https://fem-react-typescript.vercel.app/The%20Context%20API.md
-
 //https://ui.dev/react-router-protected-routes-authentication
