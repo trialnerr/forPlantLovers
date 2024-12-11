@@ -2,7 +2,11 @@ import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { GalleryCardProps } from "../types";
 
-function GalleryCard({ plantWithNote, deletePlantAndNote, updateNote }: GalleryCardProps) {
+function GalleryCard({
+  plantWithNote,
+  deletePlantAndNote,
+  updateNote,
+}: GalleryCardProps) {
   const { cloudinaryImages, commonNames, scientificName, notes, _id } =
     plantWithNote;
   const { note, idDate, idPlace } = notes[0];
@@ -18,7 +22,7 @@ function GalleryCard({ plantWithNote, deletePlantAndNote, updateNote }: GalleryC
   async function handleDelete() {
     deletePlantAndNote(plantId, noteId);
   }
-  
+
   async function saveEdits() {
     setIsEditing(false);
     updateNote(noteId, editNote, editPlace);
@@ -29,7 +33,7 @@ function GalleryCard({ plantWithNote, deletePlantAndNote, updateNote }: GalleryC
   }
 
   return (
-    <article className="max-w-sm bg-white border border-gray-300 rounded-lg shadow-md overflow-hidden">
+    <article className="max-w-sm bg-white border border-gray-300 rounded-lg shadow-md overflow-hidden relative">
       <section className="grid grid-cols-2 gap-2 p-3">
         {cloudinaryImages.map((img, i) => (
           <img
@@ -52,7 +56,7 @@ function GalleryCard({ plantWithNote, deletePlantAndNote, updateNote }: GalleryC
           <span className="text-gray-500 font-normal">{scientificName}</span>
         </h6>
         {/* Note Section */}
-        <div className="bg-gray-50 p-4 rounded-lg shadow-inner mb-5">
+        <div className="bg-gray-50 p-4 rounded-lg shadow-inner mb-10">
           <p className="mb-2 text-gray-700">
             <strong>Note:</strong>{" "}
             {isEditing ? (
@@ -87,7 +91,7 @@ function GalleryCard({ plantWithNote, deletePlantAndNote, updateNote }: GalleryC
           </p>
         </div>
         {/* End Note Section */}
-        <div className="flex justify-end space-x-2">
+        <div className="flex justify-end space-x-2 absolute bottom-4 right-5 pt-3">
           {isEditing ? (
             <>
               <button
@@ -130,4 +134,3 @@ function GalleryCard({ plantWithNote, deletePlantAndNote, updateNote }: GalleryC
 }
 
 export default GalleryCard;
-
