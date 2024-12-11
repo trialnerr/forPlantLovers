@@ -1,12 +1,17 @@
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { PlantCare, PlantCareResponse, PlantDetails, PlantDetailsResponse, PlantWithNote } from "../types";
 import PlantCareChat from "../components/PlantCareChat";
 import PlantImages from "../components/PlantCareDetailImages";
-import { useContext, useEffect, useState } from "react";
-import { AuthContext } from "../context/authContext";
+import { useEffect, useState } from "react";
 
 function PlantCarePage() {
   const { state } = useLocation();
+  const navigate = useNavigate(); 
+  console.log(state)
+  if (!state) {
+    console.log('I am being navigated');
+    navigate('../notfound');
+  }
   const { plantWithNote } = state as { plantWithNote: PlantWithNote };
   const { cloudinaryImages, commonNames, notes, genus } = plantWithNote;
   const date = new Date(notes[0].idDate).toLocaleDateString();
