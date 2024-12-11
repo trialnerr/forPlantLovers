@@ -1,4 +1,3 @@
-
 import { UploadProps } from "../types";
 
 function Upload({ handleImageUpload }: UploadProps): React.JSX.Element {
