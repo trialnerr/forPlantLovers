@@ -5,21 +5,16 @@ import icon from "../client/assets/android-chrome-192x192.png"
 
 function NavBar() {
   const context = useContext(AuthContext);
-  console.log(context?.user, 'currentUser in navBar'); 
+
   return (
     <nav className="bg-grey shadow-lg px-8 md:px-16 fixed top-0 left-0 w-full z-20 border-b border-b-inherit">
       <div className="container mx-auto flex items-center justify-between h-16">
-        {/* Logo Section */}
-        <div className="flex items-center gap-2">
-          <img
-            src={icon}
-            alt="Plant Lovers Icon"
-            className="h-10 w-10 md:h-12 md:w-12"
-          />
-          <h1 className="text-green font-bold text-lg md:text-xl">
+        <a href="/" className="flex items-center space-x-3 rtl:space-x-reverse">
+          <img src={icon} className="h-6 md:h-8" alt="forPlantLovers icon" />
+          <span className="-ml-1   self-center md:text-2xl font-semibold whitespace-nowrap text-green">
             forPlantLovers
-          </h1>
-        </div>
+          </span>
+        </a>
 
         {/* Navigation Links */}
         {context?.user && (
@@ -48,9 +43,7 @@ function NavBar() {
                 Gallery
               </NavLink>
             </li>
-            <li>
-
-            </li>
+            <li></li>
           </ul>
         )}
         <div className="flex items-center gap-4">
@@ -69,7 +62,7 @@ function NavBar() {
           ) : (
             <button
               onClick={context.logout}
-              className="px-4 py-2 bg-green text-grey rounded-lg hover:bg-lightGreen transition flex items-center gap-2"
+              className="px-2 py-1 md:px-4 md:py-2 bg-green text-grey rounded-lg hover:bg-lightGreen transition flex items-center gap-2 text-sm md:text-lg"
             >
               Logout
               <svg
@@ -88,6 +81,36 @@ function NavBar() {
           )}
         </div>
       </div>
+      {/* Navigation Links on mobile*/}
+      {context?.user && (
+        <ul className="flex items-center gap-6 w-full justify-center py-2  border-t md:hidden">
+          <li>
+            <NavLink
+              to="/"
+              className="text-black hover:text-green transition text-sm md:text-md"
+            >
+              Home
+            </NavLink>
+          </li>
+          <li>
+            <NavLink
+              to="/identify"
+              className="text-black hover:text-green transition text-sm md:text-md"
+            >
+              Identify a Plant
+            </NavLink>
+          </li>
+          <li>
+            <NavLink
+              to="/gallery"
+              className="text-black hover:text-green transition text-sm md:text-md"
+            >
+              Gallery
+            </NavLink>
+          </li>
+          <li></li>
+        </ul>
+      )}
     </nav>
   );
 }
