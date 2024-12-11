@@ -49,12 +49,15 @@ function NavBar() {
         <div className="flex items-center gap-4">
           {!context?.user ? (
             <>
-              <NavLink to="/login" className="text-black hover:text-green">
+              <NavLink
+                to="/login"
+                className="text-black hover:text-green text-sm md:text-lg"
+              >
                 Sign In
               </NavLink>
               <NavLink
                 to="/register"
-                className="px-4 py-2 bg-green text-grey rounded-lg hover:bg-lightGreen transition"
+                className="px-2 py-1 md:px-4 md:py-2 bg-green text-grey rounded-lg hover:bg-lightGreen transition text-sm md:text-lg"
               >
                 Register
               </NavLink>
