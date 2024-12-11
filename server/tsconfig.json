@@ -12,33 +12,17 @@
     "importHelpers": true,
     "typeRoots": ["./node_modules/@types", "./src/types"],
     "module": "es2022",
-    // "esModuleInterop": true,
-    // "target": "ES2023",
-    // "lib": ["ES2023"],
     "sourceMap": true,
     "outDir": "dist",
     "rootDir": "src",
     "skipLibCheck": true,
-    "baseUrl": ".",
-    "paths": {
-      "@/*" : ["./src/*"], 
-    },
-    // "moduleResolution": "nodenext",
-    
+
     /* Bundler mode */
-    // "allowImportingTsExtensions": true,
     "isolatedModules": true,
     "moduleDetection": "force",
     "emitDeclarationOnly": false,
-    // "noEmit": true,
     /* Linting */
-    // "strict": true,
     "strictNullChecks": true,
-    // "noUnusedLocals": true,
-    // "noImplicitAny": false,
-    // "noImplicitReturns": true,
-    // "noUnusedParameters": true,
-    // "noFallthroughCasesInSwitch": true,
     "noUncheckedSideEffectImports": true,
     "allowJs": true
   },
