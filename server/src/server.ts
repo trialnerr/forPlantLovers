@@ -5,7 +5,6 @@ import session from "express-session";
 import MongoStore from "connect-mongo";
 import cookieParser from "cookie-parser";
 import connectDB from "./config/database";
-//error handler middleware
 import globalErrorHandler from "./middleware/globalErrorHandler";
 import notFoundHandler from "./middleware/notFound";
 import { env } from "process";
@@ -47,13 +46,11 @@ app.use("/api/plant", plantRouter);
 app.use("/api/user", userRouter);
 app.use("/api", mainRouter);
 app.use("api/*", notFoundHandler);
-// Catch-all route to serve the React app for any unmatched routes
-// app.get("*", (_, res) => {
-//   res.sendFile(path.join(__dirname, "../dist/index.html"));
-// });
-
 app.use(globalErrorHandler);
 
 app.listen(PORT, () => {
   console.log(`[server]: Server is running at http://localhost:${PORT}`);
 });
+
+
+
