@@ -134,6 +134,7 @@ const getMorePlantDetails = async (
     return next(error);
   }
 };
+
 const plantController = {
   createPlant,
   getAllUserPlants,
