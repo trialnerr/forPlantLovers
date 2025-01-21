@@ -1,5 +1,7 @@
 import { useState } from "react";
 import Upload from "../components/Upload";
+import logo from "../client/assets/smallerIcon.png";
+
 import {
   Organ,
   OrganType,
@@ -26,7 +28,7 @@ function Identify() {
     useState<ApiImageResponse | null>(null);
   const [done, setDone] = useState<boolean>(false);
   const [errorMsg, setErrorMsg] = useState<string | undefined>();
- 
+
   function closeMsg() {
     setErrorMsg(undefined);
   }
@@ -165,7 +167,14 @@ function Identify() {
               }
               disabled={organs.length == 0}
             >
-              IDENTIFY
+              <div className="flex justify-center items-center gap-2">
+                <img
+                  className="size-5"
+                  src={logo}
+                  alt="Green plant logo for forPlantLovers"
+                />
+                IDENTIFY
+              </div>
             </button>
           </form>
 
