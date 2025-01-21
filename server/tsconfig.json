@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "target": "ES2022",
+    "target": "ES6",
     "strict": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
@@ -8,10 +8,10 @@
     "noFallthroughCasesInSwitch": true,
     "noImplicitAny": false,
     "esModuleInterop": true,
-    "moduleResolution": "node",
+    "moduleResolution": "node16",
     "importHelpers": true,
     "typeRoots": ["./node_modules/@types", "./src/types"],
-    "module": "es2022",
+    "module": "Node16",
     "sourceMap": true,
     "outDir": "dist",
     "rootDir": "src",
