@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response } from "express";
-import cloudinary from "../middleware/cloudinary";
-import { HttpCode } from "../types/types";
-import { createServerError } from "../utils/createServerError";
+import cloudinary from "../middleware/cloudinary.js";
+import { HttpCode } from "../types/types.js";
+import { createServerError } from "../utils/createServerError.js";
 const saveImage = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const uploadedImages = await Promise.all(

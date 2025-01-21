@@ -1,5 +1,5 @@
 import express from "express";
-import plantNoteController from "../controllers/plantNoteController";
+import plantNoteController from "../controllers/plantNoteController.js";
 
 const plantNoteRouter = express.Router();
 

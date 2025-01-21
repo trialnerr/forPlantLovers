@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-misused-promises */
 import { Strategy as LocalStrategy } from "passport-local";
-import {IUser, User} from "../models/User";
+import {IUser, User} from "../models/User.js";
 import { PassportStatic } from "passport";
 import { HydratedDocument } from "mongoose";
 

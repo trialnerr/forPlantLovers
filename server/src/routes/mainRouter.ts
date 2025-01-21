@@ -3,11 +3,11 @@
 import express, { NextFunction, Request, Response } from "express";
 const router = express.Router();
 import multer from "multer";
-import imageController from "../controllers/imageController";
-import apiReq from "../apiTest";
-import { ensureAuth } from "../middleware/auth";
-import { HttpCode, ImageRequestBody, Images } from "../types/types";
-import { createServerError } from "../utils/createServerError";
+import imageController from "../controllers/imageController.js";
+import apiReq from "../apiTest.js";
+import { ensureAuth } from "../middleware/auth.js";
+import { HttpCode, ImageRequestBody, Images } from "../types/types.js";
+import { createServerError } from "../utils/createServerError.js";
 
 const upload = multer({ dest: "uploads/" });
 

@@ -4,21 +4,20 @@ import passport from "passport";
 import session from "express-session";
 import MongoStore from "connect-mongo";
 import cookieParser from "cookie-parser";
-import connectDB from "./config/database";
-import globalErrorHandler from "./middleware/globalErrorHandler";
-import notFoundHandler from "./middleware/notFound";
+import connectDB from "./config/database.js";
+import globalErrorHandler from "./middleware/globalErrorHandler.js";
+import notFoundHandler from "./middleware/notFound.js";
 import { env } from "process";
-import passportConfig from "./config/passport";
+import passportConfig from "./config/passport.js";
 import cors from "cors";
-import userRouter from "./routes/userRouter";
-import mainRouter from "./routes/mainRouter";
-import plantRouter from "./routes/plantRouter";
-import plantNoteRouter from "./routes/plantNoteRouter";
+import userRouter from "./routes/userRouter.js";
+import mainRouter from "./routes/mainRouter.js";
+import plantRouter from "./routes/plantRouter.js";
+import plantNoteRouter from "./routes/plantNoteRouter.js";
 
 const app = express();
 const PORT = process.env.PORT || 3001;
 
-await connectDB();
 passportConfig(passport);
 
 app.use(
@@ -48,9 +47,12 @@ app.use("/api", mainRouter);
 app.use("api/*", notFoundHandler);
 app.use(globalErrorHandler);
 
-app.listen(PORT, () => {
-  console.log(`[server]: Server is running at http://localhost:${PORT}`);
-});
+connectDB().then(() => {
+   app.listen(PORT, () => {
+     console.log(`[server]: Server is running at http://localhost:${PORT}`);
+   });
+}).catch(console.dir);
+
 
 
 

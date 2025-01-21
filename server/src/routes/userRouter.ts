@@ -1,8 +1,8 @@
 import express, { Request, Response } from "express";
-import userController from "../controllers/userController";
-import validateUserRegistration from "../middleware/validateUser";
-import { ensureAuth } from "../middleware/auth";
-import { PassportRequest } from "../types/types";
+import userController from "../controllers/userController.js";
+import validateUserRegistration from "../middleware/validateUser.js";
+import { ensureAuth } from "../middleware/auth.js";
+import { PassportRequest } from "../types/types.js";
 const userRouter = express.Router();
 
 userRouter.post(

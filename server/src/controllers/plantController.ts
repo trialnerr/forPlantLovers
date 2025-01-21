@@ -1,11 +1,11 @@
 import { NextFunction, Request, Response } from "express";
-import { createServerError } from "../utils/createServerError";
-import { CreatePlantBody, HttpCode } from "../types/types";
-import { Plant } from "../models/Plant";
+import { createServerError } from "../utils/createServerError.js";
+import { CreatePlantBody, HttpCode } from "../types/types.js";
+import { Plant } from "../models/Plant.js";
 import { Types } from "mongoose";
-import getPlantCareDetails from "../utils/getPlantCareDetails";
-import getPlantSpeciesId from "../utils/getPlantSpecies";
-import getPlantDetails from "../utils/getPlantDetails";
+import getPlantCareDetails from "../utils/getPlantCareDetails.js";
+import getPlantSpeciesId from "../utils/getPlantSpecies.js";
+import getPlantDetails from "../utils/getPlantDetails.js";
 
 const createPlant = async (
   req: Request<object, object, CreatePlantBody>,

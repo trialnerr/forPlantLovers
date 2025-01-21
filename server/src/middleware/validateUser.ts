@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response } from "express";
 import validator from "validator";
-import { HttpCode, UserRegistrationRequestBody } from "../types/types";
-import { createServerError } from "../utils/createServerError";
+import { HttpCode, UserRegistrationRequestBody } from "../types/types.js";
+import { createServerError } from "../utils/createServerError.js";
 
 const validateUserRegistration = (
   req: Request<object, object, UserRegistrationRequestBody>,

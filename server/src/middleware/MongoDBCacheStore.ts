@@ -7,7 +7,7 @@ import {
   PerenualPlantListData,
   PerenualPlantListResponse,
   SetOptionsType,
-} from "../types/types";
+} from "../types/types.js";
 
 export class MongoDBCacheStore {
   uri: string;

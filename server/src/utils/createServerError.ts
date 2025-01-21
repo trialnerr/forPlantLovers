@@ -1,4 +1,4 @@
-import { HttpCode, ServerError } from "../types/types";
+import { HttpCode, ServerError } from "../types/types.js";
 
 export const createServerError = (
   message: string,

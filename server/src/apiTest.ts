@@ -1,7 +1,7 @@
 import axios from "axios";
 import { env } from "process";
-import { HttpCode, Images } from "./types/types";
-import { createServerError } from "./utils/createServerError";
+import { HttpCode, Images } from "./types/types.js";
+import { createServerError } from "./utils/createServerError.js";
 
 const apiReq = async (organTypes: string[], imgUrls: Images[])  => {
   const urlParams = new URLSearchParams();

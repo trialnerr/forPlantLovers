@@ -4,9 +4,9 @@ import {
   HttpCode,
   UserLoginRequestBody,
   UserRegistrationRequestBody,
-} from "../types/types";
-import { User } from "../models/User";
-import { createServerError } from "../utils/createServerError";
+} from "../types/types.js";
+import { User } from "../models/User.js";
+import { createServerError } from "../utils/createServerError.js";
 import passport from "passport";
 
 const createUser = async (

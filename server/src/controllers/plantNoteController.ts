@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response } from "express";
-import { createServerError } from "../utils/createServerError";
-import { CreatePlantNoteBody, HttpCode, UpdatePlantNoteBody } from "../types/types";
-import { PlantNote } from "../models/PlantNote";
+import { createServerError } from "../utils/createServerError.js";
+import { CreatePlantNoteBody, HttpCode, UpdatePlantNoteBody } from "../types/types.js";
+import { PlantNote } from "../models/PlantNote.js";
 import { Types } from "mongoose";
 
 const createPlantNote = async (

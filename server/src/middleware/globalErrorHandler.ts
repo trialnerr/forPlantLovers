@@ -1,5 +1,5 @@
 import { NextFunction, Request, Response } from "express";
-import { ServerError } from "../types/types";
+import { ServerError } from "../types/types.js";
 
 const globalErrorHandler = (err: ServerError, _req: Request, res: Response, _next: NextFunction) => {
   if (err.status) {

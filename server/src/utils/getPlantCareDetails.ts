@@ -1,5 +1,5 @@
-import { PerenualPlantCareData } from "../types/types";
-import { MongoDBCacheStore } from "../middleware/MongoDBCacheStore";
+import { PerenualPlantCareData } from "../types/types.js";
+import { MongoDBCacheStore } from "../middleware/MongoDBCacheStore.js";
 import { env } from "process";
 
 const store = new MongoDBCacheStore(env.DB_STRING, "test", "cache");

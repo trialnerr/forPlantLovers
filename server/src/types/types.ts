@@ -1,5 +1,5 @@
 import { Request } from "express";
-import { IUser } from "../models/User";
+import { IUser } from "../models/User.js";
 import { HydratedDocument } from "mongoose";
 
 export enum HttpCode {
