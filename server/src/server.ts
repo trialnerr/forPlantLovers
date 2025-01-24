@@ -16,7 +16,7 @@ import plantRouter from "./routes/plantRouter.js";
 import plantNoteRouter from "./routes/plantNoteRouter.js";
 
 const app = express();
-const PORT = process.env.PORT || 3001;
+const PORT = env.PORT || 3001;
 
 passportConfig(passport);
 

@@ -13,6 +13,8 @@ declare global {
       PERENUAL_API_KEY: string;
       PERENUAL_API_KEY_2: string;
       PERENUAL_API_KEY_3: string;
+      VITE_SUPABASE_URL: string; 
+      VITE_SUPABASE_ANON_KEY: string; 
     }
   }
 }
