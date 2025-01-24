@@ -1,6 +1,8 @@
 # Plant Identifier App
 
 An app where you can identify plant types, and save them to a personal gallery. 
+View it here: [APP LINK](https://forplantlovers.onrender.com/)
+PS: I am using render's free deployment services. The app takes a while to load, but it will! Enjoy, and let me know any feedback you have for me. 
 
 ## Features
 
